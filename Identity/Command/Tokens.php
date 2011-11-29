@@ -2,19 +2,20 @@
 
 namespace Guzzle\Openstack\Identity\Command;
 
-use Guzzle\Openstack\Commons\JsonAbstractCommand;
+use Guzzle\Openstack\Commons\AbstractJsonCommand;
+
 /**
  * Sends a token API request
  *
  * @guzzle username doc="Username" required="true"
  * @guzzle password doc="Password" required="true"
  */
-class Tokens extends JsonAbstractCommand {
-
+class Tokens extends AbstractJsonCommand
+{
     /**
      * Set the username
      *
-     * @param string $username 
+     * @param string $username
      *
      * @return Tokens
      */
@@ -33,9 +34,10 @@ class Tokens extends JsonAbstractCommand {
     public function setPassword($password)
     {
         return $this->set('password', $password);
-    }    
-    
-    protected function build() {
+    }
+
+    protected function build()
+    {
         $data = array(
             "auth" => array(
                 "passwordCredentials" => array(
@@ -45,8 +47,6 @@ class Tokens extends JsonAbstractCommand {
             )
         );
         $body = json_encode($data);
-        $this->request = $this->client->post('/tokens', array("Content-Type" => "application/json"), $body);
-        echo "Request es ".$this->request->getUrl();
+        $this->request = $this->client->post('tokens', array("Content-Type" => "application/json"), $body);
     }
-    
 }
