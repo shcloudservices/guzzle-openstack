@@ -8,11 +8,10 @@ use Guzzle\Service\Client;
 use Guzzle\Service\Description\XmlDescriptionBuilder;
 
 class IdentityClient extends Client
-{    
+{
     protected $username;
 
     protected $password;
-
 
     /**
      * Factory method to create a new IdentityClient
@@ -22,12 +21,11 @@ class IdentityClient extends Client
      *    scheme - URI scheme: http or https
      *    port - API Port
      *    username - API username
-     *    password - API password 
+     *    password - API password
      *    api_version - API version
      *    ip - IP Address
      *
      * @return IdentityClient
-     *
      */
     public static function factory($config)
     {
@@ -41,19 +39,14 @@ class IdentityClient extends Client
         $config = Inspector::prepareConfig($config, $default, $required);
 
         $client = new self($config->get('base_url'),
-                $config->get('username'),
-                $config->get('password')
+            $config->get('username'),
+            $config->get('password')
         );
         $client->setConfig($config);
 
-        // Add the XML service description to the client
-        // Uncomment the following two lines to use an XML service description
-        // $builder = new XmlDescriptionBuilder(__DIR__ . DIRECTORY_SEPARATOR . 'client.xml');
-        // $client->setDescription($builder->build());
-
         return $client;
     }
-    
+
     /**
      * Client constructor
      *
