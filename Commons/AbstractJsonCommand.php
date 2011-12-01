@@ -9,16 +9,15 @@ use Guzzle\Service\Command\AbstractCommand;
  *
  * @author aromero
  */
-abstract class JsonAbstractCommand extends AbstractCommand{
-    
-    
+abstract class AbstractJsonCommand extends AbstractCommand
+{
     protected function process()
     {
         $response = $this->getResponse();
         $jsonresponse = $response->getBody();
         $this->result = json_decode($jsonresponse, true);
     }
-    
+
     /**
      * {@inheritdoc}
      * @return Array
@@ -28,5 +27,3 @@ abstract class JsonAbstractCommand extends AbstractCommand{
         return parent::getResult();
     }
 }
-
-?>

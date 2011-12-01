@@ -8,7 +8,6 @@ use Guzzle\Service\Client;
 use Guzzle\Service\Description\XmlDescriptionBuilder;
 
 class ComputeClient extends Client
-
 {
     protected $baseUrl, $identity;
     /**
@@ -19,8 +18,6 @@ class ComputeClient extends Client
      *    identity - Client Identity
      *
      * @return ComputeClient
-     *
-     * @TODO update factory method and docblock for parameters
      */
     public static function factory($config)
     {
@@ -35,13 +32,9 @@ class ComputeClient extends Client
         $client = new self($config->get('base_url'), $config->get('identity'));
         $client->setConfig($config);
 
-        // Add the XML service description to the client
-        // Uncomment the following two lines to use an XML service description
-        // $builder = new XmlDescriptionBuilder(__DIR__ . DIRECTORY_SEPARATOR . 'client.xml');
-        // $client->setDescription($builder->build());
         return $client;
     }
-    
+
     /**
      * Client constructor
      *
