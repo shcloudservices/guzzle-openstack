@@ -67,4 +67,23 @@ class IdentityClient extends Client
         $this->username = $username;
         $this->password = $password;
     }
+    
+    /**
+     * Devuelve un token 
+     * @param type $user
+     * @param type $pass
+     * @param type $forceRefresh
+     * @return string 
+     */
+    public function getToken($user, $pass, $forceRefresh = false)
+    {
+        $key = $user . '_' . $pass;
+        if ($forceRefresh || !$this->tokenCache[$key]) {
+            $this->tokenCache[$key] = $this->getCommand('tokens', array('username'=>$user, 
+                'password'=>$pass))->execute();
+        }
+        //Aqui iria la validacion de que el token no haya expirado
+
+        return $this->tokenCache[$key];
+    }
 }
