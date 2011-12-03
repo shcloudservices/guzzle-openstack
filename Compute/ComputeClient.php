@@ -4,12 +4,14 @@ namespace Guzzle\Openstack\Compute;
 
 use Guzzle\Common\Inspector;
 use Guzzle\Http\Message\RequestInterface;
-use Guzzle\Service\Client;
+use Guzzle\Openstack\Commons\AbstractClient;
 use Guzzle\Service\Description\XmlDescriptionBuilder;
+use Guzzle\Openstack\Commons\IdentityAuthObserver;
 
-class ComputeClient extends Client
+class ComputeClient extends AbstractClient
 {
     protected $baseUrl, $identity;
+
     /**
      * Factory method to create a new ComputeClient
      *
@@ -27,11 +29,12 @@ class ComputeClient extends Client
             'version' => '1.0',
             'port' => '8774'
         );
-        $required = array('base_url','ip');
+        $required = array('base_url','ip','identity');
         $config = Inspector::prepareConfig($config, $default, $required);
         $client = new self($config->get('base_url'), $config->get('identity'));
         $client->setConfig($config);
-
+        $client->getEventManager()->attach(new IdentityAuthObserver(), 0);
+        
         return $client;
     }
 
@@ -39,11 +42,11 @@ class ComputeClient extends Client
      * Client constructor
      *
      * @param string $baseUrl Base URL of the web service
-     * @param IdentityClient Client Identity
+     * @param IdentityClient Identity Client
      */
-    public function __construct($baseUrl, $nIdentity)
+    public function __construct($baseUrl, $identity)
     {
         parent::__construct($baseUrl);
-        $identity = $nIdentity;
+        $this->identity = $identity;
     }
 }
