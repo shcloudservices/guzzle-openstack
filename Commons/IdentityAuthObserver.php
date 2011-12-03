@@ -12,7 +12,7 @@ class IdentityAuthObserver implements Observer{
     {
         if($event == 'command.before_send')
         {
-            $token = $subject->identiy->getToken($subject->username, $subject->password);
+            $token = $subject->getIdentity()->getToken($subject->getUsername(), $subject->getPassword());
             $subject->setHeader('X-Auth-Token', $token);
             return;
         } 

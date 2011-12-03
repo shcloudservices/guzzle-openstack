@@ -12,7 +12,19 @@ class ComputeClient extends AbstractClient
 {
     protected $baseUrl, $identity, $username, $password;
 
-    /**
+    public function getIdentity() {
+        return $this->identity;
+    }
+
+    public function getUsername() {
+        return $this->username;
+    }
+
+    public function getPassword() {
+        return $this->password;
+    }
+
+     /**
      * Factory method to create a new ComputeClient
      *
      * @param array|Collection $config Configuration data. Array keys:
