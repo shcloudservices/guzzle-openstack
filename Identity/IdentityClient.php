@@ -9,6 +9,8 @@ use Guzzle\Service\Description\XmlDescriptionBuilder;
 
 class IdentityClient extends Client
 {
+    protected $tokenCache;
+    
     /**
      * Factory method to create a new IdentityClient
      *
@@ -61,7 +63,7 @@ class IdentityClient extends Client
     {
         $key = $username . '_' . $password;
         if ($forceRefresh || !$this->tokenCache[$key]) {
-            $this->tokenCache[$key] = $this->getCommand('tokens', array('username'=>$username, 
+            $this->tokenCache[$key] = $this->getCommand('authenticate', array('username'=>$username, 
                 'password'=>$password))->execute();
         }
 
