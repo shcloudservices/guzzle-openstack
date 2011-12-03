@@ -10,7 +10,7 @@ use Guzzle\Openstack\Commons\IdentityAuthObserver;
 
 class ComputeClient extends AbstractClient
 {
-    protected $baseUrl, $identity;
+    protected $baseUrl, $identity, $username, $password;
 
     /**
      * Factory method to create a new ComputeClient
@@ -29,9 +29,9 @@ class ComputeClient extends AbstractClient
             'version' => '1.0',
             'port' => '8774'
         );
-        $required = array('base_url','ip','identity');
+        $required = array('base_url','ip','identity','username','password');
         $config = Inspector::prepareConfig($config, $default, $required);
-        $client = new self($config->get('base_url'), $config->get('identity'));
+        $client = new self($config->get('base_url'), $config->get('identity'),$config->get('username'),$config->get('password'));
         $client->setConfig($config);
         $client->getEventManager()->attach(new IdentityAuthObserver(), 0);
         
@@ -44,9 +44,11 @@ class ComputeClient extends AbstractClient
      * @param string $baseUrl Base URL of the web service
      * @param IdentityClient Identity Client
      */
-    public function __construct($baseUrl, $identity)
+    public function __construct($baseUrl, $identity, $username, $password)
     {
         parent::__construct($baseUrl);
         $this->identity = $identity;
+        $this->username = $username;
+        $this->password = $password;
     }
 }
