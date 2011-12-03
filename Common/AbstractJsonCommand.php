@@ -1,6 +1,6 @@
 <?php
 
-namespace Guzzle\Openstack\Commons;
+namespace Guzzle\Openstack\Common;
 
 use Guzzle\Service\Command\AbstractCommand;
 

@@ -4,25 +4,13 @@ namespace Guzzle\Openstack\Compute;
 
 use Guzzle\Common\Inspector;
 use Guzzle\Http\Message\RequestInterface;
-use Guzzle\Openstack\Commons\AbstractClient;
+use Guzzle\Openstack\Common\AbstractClient;
 use Guzzle\Service\Description\XmlDescriptionBuilder;
-use Guzzle\Openstack\Commons\IdentityAuthObserver;
+use Guzzle\Openstack\Common\IdentityAuthObserver;
 
 class ComputeClient extends AbstractClient
 {
-    protected $baseUrl, $identity, $username, $password;
-
-    public function getIdentity() {
-        return $this->identity;
-    }
-
-    public function getUsername() {
-        return $this->username;
-    }
-
-    public function getPassword() {
-        return $this->password;
-    }
+    protected $baseUrl;
 
      /**
      * Factory method to create a new ComputeClient

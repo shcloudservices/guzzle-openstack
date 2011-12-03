@@ -2,7 +2,7 @@
 
 namespace Guzzle\Openstack\Identity\Command;
 
-use Guzzle\Openstack\Commons\AbstractJsonCommand;
+use Guzzle\Openstack\Common\AbstractJsonCommand;
 
 /**
  * Requests a new token for username

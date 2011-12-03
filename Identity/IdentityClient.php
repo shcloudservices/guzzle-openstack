@@ -63,8 +63,9 @@ class IdentityClient extends Client
     {
         $key = $username . '_' . $password;
         if ($forceRefresh || !$this->tokenCache[$key]) {
-            $this->tokenCache[$key] = $this->getCommand('authenticate', array('username'=>$username, 
-                'password'=>$password))->execute();
+            $response = $this->getCommand('authenticate', array('username'=>$username, 
+                'password'=>$password))->execute()->getResult();
+            $this->tokenCache[$key] = $response['access']['token']['id'];
         }
 
         return $this->tokenCache[$key];
