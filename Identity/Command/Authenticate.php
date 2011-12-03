@@ -2,15 +2,15 @@
 
 namespace Guzzle\Openstack\Identity\Command;
 
-use Guzzle\Openstack\Commons\AbstractJsonCommand;
+use Guzzle\Openstack\Common\AbstractJsonCommand;
 
 /**
- * Sends a token API request
+ * Requests a new token for username
  *
  * @guzzle username doc="Username" required="true"
  * @guzzle password doc="Password" required="true"
  */
-class Tokens extends AbstractJsonCommand
+class Authenticate extends AbstractJsonCommand
 {
     /**
      * Set the username
