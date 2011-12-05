@@ -9,10 +9,8 @@ use Guzzle\Service\Description\XmlDescriptionBuilder;
 
 class IdentityClient extends Client
 {
-    protected $username;
-
-    protected $password;
-
+    protected $tokenCache;
+    
     /**
      * Factory method to create a new IdentityClient
      *
@@ -35,47 +33,40 @@ class IdentityClient extends Client
             'version' => '2.0',
             'port' => '35357'
         );
-        $required = array('username', 'password', 'base_url', 'ip');
+        $required = array('base_url', 'ip');
         $config = Inspector::prepareConfig($config, $default, $required);
 
-        $client = new self($config->get('base_url'),
-            $config->get('username'),
-            $config->get('password')
-        );
+        $client = new self($config->get('base_url'));
         $client->setConfig($config);
 
         return $client;
     }
 
     /**
-     * Client constructor
+     * IdentityClient constructor
      *
      * @param string $baseUrl Base URL of the web service
-     * @param string $username API username
-     * @param string $password API password
      */
-    public function __construct($baseUrl, $username, $password)
+    public function __construct($baseUrl)
     {
         parent::__construct($baseUrl);
-        $this->username = $username;
-        $this->password = $password;
     }
     
     /**
-     * Devuelve un token 
-     * @param type $user
-     * @param type $pass
-     * @param type $forceRefresh
+     * Returns a token for the specified username
+     * @param string $username 
+     * @param string $password
+     * @param string $forceRefresh
      * @return string 
      */
-    public function getToken($user, $pass, $forceRefresh = false)
+    public function getToken($username, $password, $forceRefresh = false)
     {
-        $key = $user . '_' . $pass;
+        $key = $username . '_' . $password;
         if ($forceRefresh || !$this->tokenCache[$key]) {
-            $this->tokenCache[$key] = $this->getCommand('tokens', array('username'=>$user, 
-                'password'=>$pass))->execute();
+            $response = $this->getCommand('authenticate', array('username'=>$username, 
+                'password'=>$password))->execute()->getResult();
+            $this->tokenCache[$key] = $response['access']['token']['id'];
         }
-        //Aqui iria la validacion de que el token no haya expirado
 
         return $this->tokenCache[$key];
     }
