@@ -7,7 +7,6 @@ use Guzzle\Openstack\Common\AbstractJsonCommand;
 /**
  * Sends a servers API request get
  *
- * @guzzle token doc="Authentication Token"
  */
 class ListServers extends AbstractJsonCommand
 {

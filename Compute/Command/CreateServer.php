@@ -2,7 +2,7 @@
 
 namespace Guzzle\Openstack\Compute\Command;
 
-use Guzzle\Openstack\Commons\AbstractJsonCommand;
+use Guzzle\Openstack\Common\AbstractJsonCommand;
 
 /**
  * Sends a servers API request post
@@ -13,7 +13,6 @@ use Guzzle\Openstack\Commons\AbstractJsonCommand;
  * @guzzle metadata doc="Metadata" required="false"
  * @guzzle path doc="Path" required="false"
  * @guzzle contents doc="Contents" required="false"
- * @guzzle token doc="Authentication Token"
  */
 class CreateServer extends AbstractJsonCommand
 {
@@ -105,6 +104,6 @@ class CreateServer extends AbstractJsonCommand
         );
         $body = json_encode($data);
         $this->request = $this->client->post('servers', array("Content-Type" => "application/json"), $body);
-        $this->request->setHeader('X-Auth-Token', $this->get('token'));
+        $this->request->setHeader('X-Auth-Token', $this->client->getAuthtoken());
     }
 }
