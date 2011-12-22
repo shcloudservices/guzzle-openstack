@@ -24,9 +24,9 @@ class ComputeClient extends AbstractClient
     public static function factory($config)
     {
         $default  = array(
-            'base_url' => '{{scheme}}://{{ip}}:{{port}}/v{{version}}/',
+            'base_url' => '{{scheme}}://{{ip}}:{{port}}/v{{version}}/wtf/',
             'scheme' => 'https',
-            'version' => '1.0',
+            'version' => '2',
             'port' => '8774'
         );
         $required = array('base_url','ip','identity','username','password');

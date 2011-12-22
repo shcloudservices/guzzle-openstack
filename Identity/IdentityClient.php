@@ -53,7 +53,7 @@ class IdentityClient extends Client
     }
     
     /**
-     * Returns a token for the specified username
+     * Returns an authentication token for the specified username password combination
      * @param string $username 
      * @param string $password
      * @param string $forceRefresh

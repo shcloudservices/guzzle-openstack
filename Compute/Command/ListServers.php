@@ -5,15 +5,12 @@ namespace Guzzle\Openstack\Compute\Command;
 use Guzzle\Openstack\Common\AbstractJsonCommand;
 
 /**
- * Sends a servers API request get
- *
- * @guzzle token doc="Authentication Token"
+ * Returns a list of available servers
  */
 class ListServers extends AbstractJsonCommand
 {
     protected function build()
     {
         $this->request = $this->client->get('servers', array("Content-Type" => "application/json"));
-        $this->request->setHeader('X-Auth-Token', $this->client->getAuthtoken());
     }
 }
