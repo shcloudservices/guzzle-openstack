@@ -24,14 +24,6 @@ class AbstractClient extends Client
         return $this->identity;
     }    
     
-    public function getAuthtoken() {
-        return $this->authtoken;
-    }
-
-    public function setAuthtoken($authtoken) {
-        $this->authtoken = $authtoken;
-    }
-    
 }
 
 ?>
