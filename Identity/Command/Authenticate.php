@@ -9,6 +9,7 @@ use Guzzle\Openstack\Common\AbstractJsonCommand;
  *
  * @guzzle username doc="Username" required="true"
  * @guzzle password doc="Password" required="true"
+ * @guzzle tenantid doc="Tenant Id"
  */
 class Authenticate extends AbstractJsonCommand
 {
@@ -36,17 +37,33 @@ class Authenticate extends AbstractJsonCommand
         return $this->set('password', $password);
     }
 
+    /**
+     * Set the tenant_id
+     *
+     * @param string $tenantId
+     *
+     * @return Tokens
+     */
+    public function setTenantid($tenantId)
+    {
+        return $this->set('tenantid', $tenantId);
+    }    
+    
     protected function build()
     {
         $data = array(
-            "auth" => array(
-                "passwordCredentials" => array(
-                    "username" => $this->get('username'),
-                    "password" => $this->get('password')
+            'auth' => array(
+                'passwordCredentials' => array(
+                    'username' => $this->get('username'),
+                    'password' => $this->get('password')
                 )
             )
         );
+        if($this->hasKey('tenantid')){
+            $data['auth']['tenantId'] = $this->get('tenantid');
+        }
         $body = json_encode($data);
+        echo $body;
         $this->request = $this->client->post('tokens', array("Content-Type" => "application/json"), $body);
     }
 }

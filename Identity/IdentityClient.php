@@ -29,7 +29,7 @@ class IdentityClient extends Client
     {
         $default = array(
             'base_url' => '{{scheme}}://{{ip}}:{{port}}/v{{version}}/',
-            'scheme' => 'https',
+            'scheme' => 'http',
             'version' => '2.0',
             'port' => '35357'
         );
@@ -50,21 +50,23 @@ class IdentityClient extends Client
     public function __construct($baseUrl)
     {
         parent::__construct($baseUrl);
+        $this->tokenCache = array();
     }
     
     /**
-     * Returns an authentication token for the specified username password combination
+     * Returns an authentication token for the specified username / tenant
      * @param string $username 
      * @param string $password
+     * @param string $tenantid
      * @param string $forceRefresh
      * @return string 
      */
-    public function getToken($username, $password, $forceRefresh = false)
+    public function getToken($username, $password, $tenantid=null, $forceRefresh = false)
     {
         $key = $username . '_' . $password;
-        if ($forceRefresh || !$this->tokenCache[$key]) {
+        if ($forceRefresh || !array_key_exists($key, $this->tokenCache)) {
             $response = $this->getCommand('authenticate', array('username'=>$username, 
-                'password'=>$password))->execute()->getResult();
+                'password'=>$password, 'tenantid'=>$tenantid))->execute()->getResult();
             $this->tokenCache[$key] = $response['access']['token']['id'];
         }
 
