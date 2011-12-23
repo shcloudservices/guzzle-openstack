@@ -26,9 +26,11 @@ Guzzle\Tests\GuzzleTestCase::setMockBasePath(__DIR__ . DIRECTORY_SEPARATOR . 'mo
 // Create a service builder to use in the unit tests
 Guzzle\Tests\GuzzleTestCase::setServiceBuilder(\Guzzle\Service\ServiceBuilder::factory(array(
     'test.abstract.os' => array(
+        'class' => '',
         'params' => array(
             'username' => 'admin',
-            'password' => 'openstack'
+            'password' => 'openstack',
+            'ip' => '192.168.4.100'
         )
     ),
     'test.identity' => array(

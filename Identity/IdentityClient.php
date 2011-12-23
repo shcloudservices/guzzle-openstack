@@ -31,7 +31,7 @@ class IdentityClient extends Client
             'base_url' => '{{scheme}}://{{ip}}:{{port}}/v{{version}}/',
             'scheme' => 'http',
             'version' => '2.0',
-            'port' => '35357'
+            'port' => '5000'
         );
         $required = array('base_url', 'ip');
         $config = Inspector::prepareConfig($config, $default, $required);
@@ -61,9 +61,9 @@ class IdentityClient extends Client
      * @param string $forceRefresh
      * @return string 
      */
-    public function getToken($username, $password, $tenantid=null, $forceRefresh = false)
+    public function getToken($username, $password, $tenantid='', $forceRefresh = false)
     {
-        $key = $username . '_' . $password;
+        $key = $username . '_' . $password . '_' . $tenantid;
         if ($forceRefresh || !array_key_exists($key, $this->tokenCache)) {
             $response = $this->getCommand('authenticate', array('username'=>$username, 
                 'password'=>$password, 'tenantid'=>$tenantid))->execute()->getResult();
