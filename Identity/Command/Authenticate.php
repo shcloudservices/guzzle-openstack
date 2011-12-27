@@ -18,7 +18,7 @@ class Authenticate extends AbstractJsonCommand
      *
      * @param string $username
      *
-     * @return Tokens
+     * @return Authenticate
      */
     public function setUsername($username)
     {
@@ -30,7 +30,7 @@ class Authenticate extends AbstractJsonCommand
      *
      * @param string $password
      *
-     * @return Tokens
+     * @return Authenticate
      */
     public function setPassword($password)
     {
@@ -42,7 +42,7 @@ class Authenticate extends AbstractJsonCommand
      *
      * @param string $tenantId
      *
-     * @return Tokens
+     * @return Authenticate
      */
     public function setTenantid($tenantId)
     {

@@ -3,10 +3,10 @@
 namespace Guzzle\Openstack\Tests\Identity\Command;
 
 /**
- * Authenticate command unit test
+ * List Tenants command unit test
  * @author Adrian Moya
  */
-class AuthenticateTest extends \Guzzle\Tests\GuzzleTestCase
+class ListTenantsTest extends \Guzzle\Tests\GuzzleTestCase
 {
 
     public function testAuthenticate()
