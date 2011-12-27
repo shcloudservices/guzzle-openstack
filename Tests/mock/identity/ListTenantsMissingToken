@@ -1,0 +1,6 @@
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json; charset=UTF-8
+Content-Length: 61
+Date: Tue, 27 Dec 2011 13:51:22 GMT
+
+{"unauthorized": {"message": "Missing token", "code": "401"}}

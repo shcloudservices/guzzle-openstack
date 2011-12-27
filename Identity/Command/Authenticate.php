@@ -63,7 +63,6 @@ class Authenticate extends AbstractJsonCommand
             $data['auth']['tenantId'] = $this->get('tenantid');
         }
         $body = json_encode($data);
-        echo $body;
         $this->request = $this->client->post('tokens', array("Content-Type" => "application/json"), $body);
     }
 }

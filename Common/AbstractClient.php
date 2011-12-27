@@ -6,7 +6,7 @@ use Guzzle\Service\Client;
 /**
  * Openstack AbstractClient
  *
- * @author amoya
+ * @author Adrian Moya
  */
 class AbstractClient extends Client
 {
