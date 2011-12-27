@@ -11,9 +11,9 @@ $loader->registerNamespaces(array(
 ));
 $loader->register();
 
-// Autoload classes for guzzle-openstack-identity
+// Autoload classes for guzzle-openstack-service
 spl_autoload_register(function($class) {
-    if (0 === strpos($class, 'Guzzle\Openstack\\')) {
+    if (0 === strpos($class, 'Guzzle\\Openstack\\')) {
         $path = implode('/', array_slice(explode('\\', $class), 2)) . '.php';
         require_once __DIR__ . '/../' . $path;
         return true;
@@ -25,4 +25,20 @@ Guzzle\Tests\GuzzleTestCase::setMockBasePath(__DIR__ . DIRECTORY_SEPARATOR . 'mo
 
 // Create a service builder to use in the unit tests
 Guzzle\Tests\GuzzleTestCase::setServiceBuilder(\Guzzle\Service\ServiceBuilder::factory(array(
+    'test.abstract.os' => array(
+        'class' => '',
+        'params' => array(
+            'username' => 'admin',
+            'password' => 'openstack',
+            'ip' => '192.168.4.100'
+        )
+    ),
+    'test.identity' => array(
+        'extends' => 'test.abstract.os',
+        'class' => 'Guzzle.Openstack.Identity.IdentityClient'
+    ),
+    'test.compute' => array(
+        'extends' => 'test.abstract.os',
+        'class' => 'Guzzle.Openstack.Compute.ComputeClient'
+    )
 )));
