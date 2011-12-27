@@ -39,8 +39,13 @@ class ListTenants extends AbstractJsonCommand
     protected function build()
     {
         if($this->hasKey('marker')){
-            // = $this->get('tenantid');
+            $this->request->getQuery()->set('marker', $this->get('marker'));
         }
-        $this->request = $this->client->post('tokens', array("Content-Type" => "application/json"), $body);
+
+        if($this->hasKey('limit')){
+            $this->request->getQuery()->set('limit', $this->get('limit'));
+        }
+        
+        $this->request = $this->client->get('tenants', array("Content-Type" => "application/json"));
     }
 }
