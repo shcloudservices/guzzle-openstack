@@ -42,7 +42,10 @@ class ComputeClient extends AbstractClient
      * Client constructor
      *
      * @param string $baseUrl Base URL of the web service
-     * @param IdentityClient Identity Client
+     * @param IdentityAuthClient $identity IdentityAuthClient for authentication
+     * @param string $username Username
+     * @param string $password Password
+     * 
      */
     public function __construct($baseUrl, $identity, $username, $password)
     {

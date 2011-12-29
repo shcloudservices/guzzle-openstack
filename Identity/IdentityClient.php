@@ -9,34 +9,28 @@ use Guzzle\Service\Description\XmlDescriptionBuilder;
 
 class IdentityClient extends Client
 {
-    protected $tokenCache;
-    
+   
     /**
      * Factory method to create a new IdentityClient
      *
      * @param array|Collection $config Configuration data. Array keys:
-     *    base_url - Base URL of web service
-     *    scheme - URI scheme: http or https
-     *    port - API Port
      *    username - API username
      *    password - API password
-     *    api_version - API version
-     *    ip - IP Address
+     *    identity - IdentityAuthClient for authentication
      *
      * @return IdentityClient
      */
     public static function factory($config)
     {
-        $default = array(
-            'base_url' => '{{scheme}}://{{ip}}:{{port}}/v{{version}}/',
-            'scheme' => 'http',
-            'version' => '2.0',
-            'port' => '5000'
-        );
-        $required = array('base_url', 'ip');
-        $config = Inspector::prepareConfig($config, $default, $required);
+        $default = array();
+        $required = array('identity', 'username', 'password');
+        $config = Inspector::prepareConfig($config, $default, $required);        
+        $client = new self($config->get('identity'),$config->get('username'),$config->get('password'));
+        $client->setConfig($config);
+        $client->getEventManager()->attach(new IdentityAuthObserver(), 0);
+        
 
-        $client = new self($config->get('base_url'));
+        $client = new self($config->get('identity')->get('base_url'));
         $client->setConfig($config);
 
         return $client;
@@ -45,31 +39,16 @@ class IdentityClient extends Client
     /**
      * IdentityClient constructor
      *
-     * @param string $baseUrl Base URL of the web service
+     * @param IdentityAuthClient $identity IdentityAuthClient for authentication
+     * @param string $username Username
+     * @param string $password Password
      */
-    public function __construct($baseUrl)
+    public function __construct($identity, $username, $password)
     {
         parent::__construct($baseUrl);
-        $this->tokenCache = array();
+        $this->identity = $identity;
+        $this->username = $username;
+        $this->password = $password;
     }
     
-    /**
-     * Returns an authentication token for the specified username / tenant
-     * @param string $username 
-     * @param string $password
-     * @param string $tenantid
-     * @param string $forceRefresh
-     * @return string 
-     */
-    public function getToken($username, $password, $tenantid='', $forceRefresh = false)
-    {
-        $key = $username . '_' . $password . '_' . $tenantid;
-        if ($forceRefresh || !array_key_exists($key, $this->tokenCache)) {
-            $response = $this->getCommand('authenticate', array('username'=>$username, 
-                'password'=>$password, 'tenantid'=>$tenantid))->execute()->getResult();
-            $this->tokenCache[$key] = $response['access']['token']['id'];
-        }
-
-        return $this->tokenCache[$key];
-    }
 }

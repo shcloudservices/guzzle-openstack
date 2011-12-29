@@ -7,7 +7,7 @@ use Guzzle\Common\Event\Subject;
 /**
  * Observer to manage authentication for Openstack Clients
  *
- * @author  aromero, amoya
+ * @author  Andreina Romero, Adrian Moya
  */
 class IdentityAuthObserver implements Observer{
     public function update(Subject $subject, $event, $context = null)

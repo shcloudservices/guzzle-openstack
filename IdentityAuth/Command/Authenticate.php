@@ -1,6 +1,6 @@
 <?php
 
-namespace Guzzle\Openstack\Identity\Command;
+namespace Guzzle\Openstack\IdentityAuth\Command;
 
 use Guzzle\Openstack\Common\AbstractJsonCommand;
 

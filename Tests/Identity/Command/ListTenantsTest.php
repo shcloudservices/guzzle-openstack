@@ -11,13 +11,14 @@ class ListTenantsTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testListTenants()
     {
-        $client = $this->getServiceBuilder()->get('test.identity');
+        $authclient = \Guzzle\Openstack\IdentityAuth\IdentityAuthClient::factory(array('username' => 'username', 'password' => 'password', 'ip' => '192.168.4.100'));
+        $client = \Guzzle\Openstack\Identity\IdentityClient::factory(array('identity' => $authclient));
         $command = $client->getCommand('ListTenants');
         $command->prepare();
         
         $this->setMockResponse($client, 'identity/ListTenants');
       
-        //Check method and endpoint
+        //Check method and resource
         $this->assertEquals('http://192.168.4.100:5000/v2.0/tenants', $command->getRequest()->getUrl());
         $this->assertEquals('GET', $command->getRequest()->getMethod());
                 
