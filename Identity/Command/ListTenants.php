@@ -46,6 +46,6 @@ class ListTenants extends AbstractJsonCommand
             $this->request->getQuery()->set('limit', $this->get('limit'));
         }
         
-        $this->request = $this->client->get('tenants', array("Content-Type" => "application/json", "X-Auth-Token" => $this->client->getToken($this->client->username, $this->client->password)));
+        $this->request = $this->client->get('tenants', array("Content-Type" => "application/json", "X-Auth-Token" => $this->client->getIdentity()->getToken($this->client->getUsername(), $this->client->getPassword())));        
     }
 }

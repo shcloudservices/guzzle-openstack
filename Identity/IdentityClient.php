@@ -6,8 +6,10 @@ use Guzzle\Common\Inspector;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Service\Client;
 use Guzzle\Service\Description\XmlDescriptionBuilder;
+use Guzzle\Openstack\Common\IdentityAuthObserver;
+use Guzzle\Openstack\Common\AbstractClient;
 
-class IdentityClient extends Client
+class IdentityClient extends AbstractClient
 {
    
     /**
@@ -28,11 +30,6 @@ class IdentityClient extends Client
         $client = new self($config->get('identity'),$config->get('username'),$config->get('password'));
         $client->setConfig($config);
         $client->getEventManager()->attach(new IdentityAuthObserver(), 0);
-        
-
-        $client = new self($config->get('identity')->get('base_url'));
-        $client->setConfig($config);
-
         return $client;
     }
 
@@ -45,7 +42,7 @@ class IdentityClient extends Client
      */
     public function __construct($identity, $username, $password)
     {
-        parent::__construct($baseUrl);
+        parent::__construct($identity->get('baseUrl'));
         $this->identity = $identity;
         $this->username = $username;
         $this->password = $password;
