@@ -24,9 +24,9 @@ class ComputeClient extends AbstractClient
     public static function factory($config)
     {
         $default  = array(
-            'base_url' => '{{scheme}}://{{ip}}:{{port}}/v{{version}}/',
+            'base_url' => '{{scheme}}://{{ip}}:{{port}}/v{{version}}/wtf/',
             'scheme' => 'https',
-            'version' => '1.0',
+            'version' => '2',
             'port' => '8774'
         );
         $required = array('base_url','ip','identity','username','password');
@@ -42,7 +42,10 @@ class ComputeClient extends AbstractClient
      * Client constructor
      *
      * @param string $baseUrl Base URL of the web service
-     * @param IdentityClient Identity Client
+     * @param IdentityAuthClient $identity IdentityAuthClient for authentication
+     * @param string $username Username
+     * @param string $password Password
+     * 
      */
     public function __construct($baseUrl, $identity, $username, $password)
     {

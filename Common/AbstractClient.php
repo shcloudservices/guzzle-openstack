@@ -6,7 +6,7 @@ use Guzzle\Service\Client;
 /**
  * Openstack AbstractClient
  *
- * @author amoya
+ * @author Adrian Moya
  */
 class AbstractClient extends Client
 {
@@ -23,14 +23,6 @@ class AbstractClient extends Client
     public function getIdentity() {
         return $this->identity;
     }    
-    
-    public function getAuthtoken() {
-        return $this->authtoken;
-    }
-
-    public function setAuthtoken($authtoken) {
-        $this->authtoken = $authtoken;
-    }
     
 }
 

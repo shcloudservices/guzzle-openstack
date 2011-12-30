@@ -6,68 +6,46 @@ use Guzzle\Common\Inspector;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Service\Client;
 use Guzzle\Service\Description\XmlDescriptionBuilder;
+use Guzzle\Openstack\Common\IdentityAuthObserver;
+use Guzzle\Openstack\Common\AbstractClient;
 
-class IdentityClient extends Client
+class IdentityClient extends AbstractClient
 {
-    protected $tokenCache;
-    
+   
     /**
      * Factory method to create a new IdentityClient
      *
      * @param array|Collection $config Configuration data. Array keys:
-     *    base_url - Base URL of web service
-     *    scheme - URI scheme: http or https
-     *    port - API Port
      *    username - API username
      *    password - API password
-     *    api_version - API version
-     *    ip - IP Address
+     *    identity - IdentityAuthClient for authentication
      *
      * @return IdentityClient
      */
     public static function factory($config)
     {
-        $default = array(
-            'base_url' => '{{scheme}}://{{ip}}:{{port}}/v{{version}}/',
-            'scheme' => 'https',
-            'version' => '2.0',
-            'port' => '35357'
-        );
-        $required = array('base_url', 'ip');
-        $config = Inspector::prepareConfig($config, $default, $required);
-
-        $client = new self($config->get('base_url'));
+        $default = array();
+        $required = array('identity', 'username', 'password');
+        $config = Inspector::prepareConfig($config, $default, $required);        
+        $client = new self($config->get('identity'),$config->get('username'),$config->get('password'));
         $client->setConfig($config);
-
+        $client->getEventManager()->attach(new IdentityAuthObserver(), 0);
         return $client;
     }
 
     /**
      * IdentityClient constructor
      *
-     * @param string $baseUrl Base URL of the web service
+     * @param IdentityAuthClient $identity IdentityAuthClient for authentication
+     * @param string $username Username
+     * @param string $password Password
      */
-    public function __construct($baseUrl)
+    public function __construct($identity, $username, $password)
     {
-        parent::__construct($baseUrl);
+        parent::__construct($identity->get('baseUrl'));
+        $this->identity = $identity;
+        $this->username = $username;
+        $this->password = $password;
     }
     
-    /**
-     * Returns a token for the specified username
-     * @param string $username 
-     * @param string $password
-     * @param string $forceRefresh
-     * @return string 
-     */
-    public function getToken($username, $password, $forceRefresh = false)
-    {
-        $key = $username . '_' . $password;
-        if ($forceRefresh || !$this->tokenCache[$key]) {
-            $response = $this->getCommand('authenticate', array('username'=>$username, 
-                'password'=>$password))->execute()->getResult();
-            $this->tokenCache[$key] = $response['access']['token']['id'];
-        }
-
-        return $this->tokenCache[$key];
-    }
 }

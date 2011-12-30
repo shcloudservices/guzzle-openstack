@@ -7,20 +7,16 @@ use Guzzle\Common\Event\Subject;
 /**
  * Observer to manage authentication for Openstack Clients
  *
- * @author  aromero, amoya
+ * @author  Andreina Romero, Adrian Moya
  */
 class IdentityAuthObserver implements Observer{
     public function update(Subject $subject, $event, $context = null)
-    {
-        if($event == 'command.create')
-        {
-            $token = $subject->getIdentity()->getToken($subject->getUsername(), $subject->getPassword());
-            $subject->setAuthtoken($token);
-            return;
-        } 
-        
-        if ($event == 'request.bad_response') {
-            //TODO: Implement request.bad_response
+    {       
+        if ($event == 'request.create') {
+            $username = $subject->getUsername();
+            $password = $subject->getPassword();
+            $token = $subject->getIdentity()->getToken($username, $password);
+            $context->setHeader('X-Auth-Token', $token);            
         }
     }
 }
