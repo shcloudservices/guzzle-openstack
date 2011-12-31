@@ -12,12 +12,18 @@ use Guzzle\Common\Event\Subject;
 class IdentityAuthObserver implements Observer{
     public function update(Subject $subject, $event, $context = null)
     {       
+        $username = $subject->getUsername();
+        $password = $subject->getPassword();
         if ($event == 'request.create') {
-            $username = $subject->getUsername();
-            $password = $subject->getPassword();
             $token = $subject->getIdentity()->getToken($username, $password);
-            $context->setHeader('X-Auth-Token', $token);            
         }
+        
+        elseif($event == 'request.failure') {
+            if ($context->getCode() == 401) {
+                $token = $subject->getIdentity()->getToken($username, $password, true);
+            }
+        }
+        $context->setHeader('X-Auth-Token', $token);
     }
 }
 
