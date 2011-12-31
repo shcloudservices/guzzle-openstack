@@ -16,6 +16,7 @@ class IdentityAuthObserver implements Observer{
         $password = $subject->getPassword();
         if ($event == 'request.create') {
             $token = $subject->getIdentity()->getToken($username, $password);
+            $context->setHeader('X-Auth-Token', $token);
         }
         
         elseif($event == 'request.failure') {
@@ -23,7 +24,6 @@ class IdentityAuthObserver implements Observer{
                 $token = $subject->getIdentity()->getToken($username, $password, true);
             }
         }
-        $context->setHeader('X-Auth-Token', $token);
     }
 }
 
