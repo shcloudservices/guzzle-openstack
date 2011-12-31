@@ -31,7 +31,7 @@ class ListTenants extends AbstractJsonCommand
      *
      * @return ListTenants
      */
-    public function setLmit($limit)
+    public function setLimit($limit)
     {
         return $this->set('limit', $limit);
     }
@@ -46,6 +46,6 @@ class ListTenants extends AbstractJsonCommand
             $this->request->getQuery()->set('limit', $this->get('limit'));
         }
         
-        $this->request = $this->client->get('tenants', array("Content-Type" => "application/json", "X-Auth-Token" => $this->client->getIdentity()->getToken($this->client->getUsername(), $this->client->getPassword())));        
+        $this->request = $this->client->get('tenants', array("X-Auth-Token" => $this->client->getIdentity()->getToken($this->client->getUsername(), $this->client->getPassword())));
     }
 }

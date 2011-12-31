@@ -10,7 +10,7 @@ use Guzzle\Service\Client;
  */
 class AbstractClient extends Client
 {
-    protected $username, $password, $identity, $authtoken;
+    protected $username, $password, $identity;
     
     public function getUsername() {
         return $this->username;

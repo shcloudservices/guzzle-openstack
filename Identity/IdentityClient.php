@@ -42,7 +42,7 @@ class IdentityClient extends AbstractClient
      */
     public function __construct($identity, $username, $password)
     {
-        parent::__construct($identity->get('baseUrl'));
+        parent::__construct($identity->getBaseurl());
         $this->identity = $identity;
         $this->username = $username;
         $this->password = $password;
