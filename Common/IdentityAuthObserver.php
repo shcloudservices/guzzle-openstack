@@ -21,7 +21,8 @@ class IdentityAuthObserver implements Observer{
         
         elseif($event == 'request.failure') {
             if ($context->getCode() == 401) {
-                $token = $subject->getIdentity()->getToken($username, $password, true);
+                $subject->getIdentity()->getToken($username, $password, true);
+                $subject->execute($subject->getLastCommand());
             }
         }
     }

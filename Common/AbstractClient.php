@@ -10,7 +10,7 @@ use Guzzle\Service\Client;
  */
 class AbstractClient extends Client
 {
-    protected $username, $password, $identity;
+    protected $username, $password, $identity, $lastCommand;
     
     public function getUsername() {
         return $this->username;
@@ -22,7 +22,23 @@ class AbstractClient extends Client
     
     public function getIdentity() {
         return $this->identity;
-    }    
+    }
+    
+    /**
+     * Set last command
+     * @param type $command 
+     */
+    public function setLastCommand($command) {
+        $this->lastCommand = $command;
+    }
+    
+    /**
+     * Get last command
+     * @return type 
+     */
+    public function getLastCommand() {
+        return $this->lastCommand; 
+    }
     
 }
 
