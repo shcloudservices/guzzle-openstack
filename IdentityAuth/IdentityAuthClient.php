@@ -6,7 +6,8 @@ use Guzzle\Common\Inspector;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Service\Client;
 use Guzzle\Service\Description\XmlDescriptionBuilder;
-use Guzzle\Http\Message;
+use Guzzle\Http\Message\BadResponseException;
+use Guzzle\Openstack\Common\OpenstackException;
 
 class IdentityAuthClient extends Client
 {
@@ -71,7 +72,7 @@ class IdentityAuthClient extends Client
                 'password'=>$password, 'tenantid'=>$tenantid))->execute()->getResult();
             }
             catch(BadResponseException $e) {
-                throw new OpenstackException("Error in response: "+$e.getMessage());
+                throw new OpenstackException($e);
             }
             $this->tokenCache[$key] = $response['access']['token']['id'];
         }
