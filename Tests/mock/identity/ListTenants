@@ -1,0 +1,6 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=UTF-8
+Content-Length: 270
+Date: Tue, 27 Dec 2011 13:59:37 GMT
+
+{"tenants": {"values": [{"enabled": true, "description": "None", "name": "invisible_to_admin", "id": "3"}, {"enabled": true, "description": "None", "name": "demo", "id": "2"}], "links": [{"href": "http://192.168.4.100:5000/tenants?'marker=3&limit=10'", "rel": "prev"}]}}

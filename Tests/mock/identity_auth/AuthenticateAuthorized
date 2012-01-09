@@ -1,0 +1,6 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=UTF-8
+Content-Length: 1021
+Date: Fri, 23 Dec 2011 01:00:34 GMT
+
+{"access": {"token": {"expires": "2015-02-05T00:00:00", "id": "admintoken", "tenant": {"id": "1", "name": "admin"}}, "serviceCatalog": [{"endpoints": [{"adminURL": "http://192.168.4.100:8774/v1.1/1", "region": "RegionOne", "internalURL": "http://192.168.4.100:8774/v1.1/1", "publicURL": "http://192.168.4.100:8774/v1.1/1"}], "type": "compute", "name": "nova"}, {"endpoints": [{"adminURL": "http://192.168.4.100:9292/v1.1/1", "region": "RegionOne", "internalURL": "http://192.168.4.100:9292/v1.1/1", "publicURL": "http://192.168.4.100:9292/v1.1/1"}], "type": "image", "name": "glance"}, {"endpoints": [{"adminURL": "http://192.168.4.100:35357/v2.0", "region": "RegionOne", "internalURL": "http://192.168.4.100:5000/v2.0", "publicURL": "http://192.168.4.100:5000/v2.0"}], "type": "identity", "name": "keystone"}], "user": {"id": "1", "roles": [{"tenantId": "1", "id": "1", "name": "Admin"}, {"id": "1", "name": "Admin"}, {"id": "3", "name": "KeystoneAdmin"}, {"id": "4", "name": "KeystoneServiceAdmin"}], "name": "admin"}}}

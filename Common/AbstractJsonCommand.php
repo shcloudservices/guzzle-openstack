@@ -1,8 +1,12 @@
 <?php
+/**
+ * @license See the LICENSE file that was distributed with this source code.
+ */
 
 namespace Guzzle\Openstack\Common;
 
 use Guzzle\Service\Command\AbstractCommand;
+use Guzzle\Service\Description\ApiCommand;
 
 /**
  * Abstract Command with process, getResult methods implemented encoding json
@@ -11,6 +15,13 @@ use Guzzle\Service\Command\AbstractCommand;
  */
 abstract class AbstractJsonCommand extends AbstractCommand
 {
+
+    public function prepare()
+    {
+        parent::prepare();
+        $this->getRequest()->setHeader('Content-Type' ,'application/json');
+    }
+    
     protected function process()
     {
         $response = $this->getResponse();
