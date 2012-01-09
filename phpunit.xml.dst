@@ -6,7 +6,7 @@
         <server name="GUZZLE" value="/path/to/guzzle" />
     </php>
     <testsuites>
-        <testsuite name="guzzle-service-guzzle-openstack-identity">
+        <testsuite name="guzzle-openstack-service">
             <directory suffix="Test.php">./Tests</directory>
         </testsuite>
     </testsuites>
