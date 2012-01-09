@@ -9,6 +9,8 @@ use Guzzle\Common\Inspector;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Service\Client;
 use Guzzle\Service\Description\XmlDescriptionBuilder;
+use Guzzle\Http\Message\BadResponseException;
+use Guzzle\Openstack\Common\OpenstackException;
 
 class IdentityAuthClient extends Client
 {
@@ -68,8 +70,13 @@ class IdentityAuthClient extends Client
     {
         $key = $username . '_' . $password . '_' . $tenantid;
         if ($forceRefresh || !array_key_exists($key, $this->tokenCache)) {
+            try {
             $response = $this->getCommand('authenticate', array('username'=>$username, 
                 'password'=>$password, 'tenantid'=>$tenantid))->execute()->getResult();
+            }
+            catch(BadResponseException $e) {
+                throw new OpenstackException($e);
+            }
             $this->tokenCache[$key] = $response['access']['token']['id'];
         }
 
