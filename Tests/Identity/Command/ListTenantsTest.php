@@ -4,7 +4,6 @@ namespace Guzzle\Openstack\Tests\Identity\Command;
 
 /**
  * List Tenants command unit test
- * @author Adrian Moya
  */
 class ListTenantsTest extends \Guzzle\Tests\GuzzleTestCase
 {
@@ -29,6 +28,8 @@ class ListTenantsTest extends \Guzzle\Tests\GuzzleTestCase
       
         $result = $command->getResult();
         $this->assertTrue(is_array($result));
+        
+        $this->assertTrue(array_key_exists('tenants', $result));
         
     }
 }

@@ -8,7 +8,7 @@ namespace Guzzle\Openstack\Identity\Command;
 use Guzzle\Openstack\Common\AbstractJsonCommand;
 
 /**
- * Requests a new token for username
+ * List tenants
  *
  * @guzzle marker doc="Marker for pagination"
  * @guzzle limit doc="Limit for pagination"

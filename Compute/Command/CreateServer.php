@@ -106,7 +106,6 @@ class CreateServer extends AbstractJsonCommand
             )
         );
         $body = json_encode($data);
-        $this->request = $this->client->post('servers', array("Content-Type" => "application/json"), $body);
-        $this->request->setHeader('X-Auth-Token', $this->client->getAuthtoken());
+        $this->request = $this->client->post('servers', null, $body);
     }
 }
