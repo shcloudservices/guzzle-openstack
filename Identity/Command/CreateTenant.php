@@ -10,7 +10,7 @@ use Guzzle\Openstack\Common\AbstractJsonCommand;
 /**
  * Create a new tenant
  *
- * @guzzle name doc="Name of the new tenant"
+ * @guzzle name doc="Name of the new tenant" required="true"
  * @guzzle description doc="Description of the new tenant"
  * @guzzle enabled doc="Status of the new tenant"
  */
