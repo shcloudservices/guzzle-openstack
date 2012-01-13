@@ -1,0 +1,6 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=UTF-8
+Content-Length: 242
+Date: Sat, 07 Jan 2012 05:41:06 GMT
+
+{"users": {"values": [{"email": "None", "enabled": true, "id": "1", "name": "admin"}, {"email": "None", "enabled": true, "id": "2", "name": "demo"}], "links": [{"href": "http://192.168.4.100:35357/users?'marker=2&limit=10'", "rel": "next"}]}}
