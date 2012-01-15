@@ -1,0 +1,6 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=UTF-8
+Content-Length: 265
+Date: Sat, 07 Jan 2012 04:55:35 GMT
+
+{"access": {"token": {"expires": "2012-01-07T20:32:21", "id": "84bcf127-21dd-4f02-a0a8-34936514d9a0"}, "user": {"id": "1", "roles": [{"id": "1", "name": "Admin"}, {"id": "3", "name": "KeystoneAdmin"}, {"id": "4", "name": "KeystoneServiceAdmin"}], "name": "admin"}}}
