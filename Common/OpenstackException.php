@@ -5,12 +5,12 @@
 
 namespace Guzzle\Openstack\Common;
 
-use Guzzle\Common\GuzzleException;
+use Guzzle\Common\GuzzleExceptionInterface;
 
 /**
  * Openstack exception
  */
-class OpenstackException extends \Exception implements GuzzleException
+class OpenstackException extends \Exception implements GuzzleExceptionInterface
 {
 }
 

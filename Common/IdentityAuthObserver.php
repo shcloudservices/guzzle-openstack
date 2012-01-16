@@ -8,7 +8,8 @@ namespace Guzzle\Openstack\Common;
 /**
  * Observer to manage authentication for Openstack Clients
  */
-class IdentityAuthObserver implements \Symfony\Component\EventDispatcher\EventSubscriberInterface{
+class IdentityAuthObserver implements \Symfony\Component\EventDispatcher\EventSubscriberInterface
+{
 
     public static function getSubscribedEvents()
     {
@@ -17,8 +18,8 @@ class IdentityAuthObserver implements \Symfony\Component\EventDispatcher\EventSu
         );
     }    
     
-    public function onRequestCreate(Guzzle\Common\Event $event)
-    {       
+    public function onRequestCreate(\Guzzle\Common\Event $event)
+    {               
         $username = $subject->getUsername();
         $password = $subject->getPassword();
         $token = $subject->getIdentity()->getToken($username, $password);
