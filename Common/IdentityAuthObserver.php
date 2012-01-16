@@ -20,8 +20,8 @@ class IdentityAuthObserver implements \Symfony\Component\EventDispatcher\EventSu
     
     public function onRequestCreate(\Guzzle\Common\Event $event)
     {               
-        //$subject = ???
-        //$context = ???
+        $subject = $event['client'];
+        $context = $event['request'];
         $username = $subject->getUsername();
         $password = $subject->getPassword();
         $token = $subject->getIdentity()->getToken($username, $password);
