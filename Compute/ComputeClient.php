@@ -5,7 +5,7 @@
 
 namespace Guzzle\Openstack\Compute;
 
-use Guzzle\Common\Inspector;
+use Guzzle\Service\Inspector;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Openstack\Common\AbstractClient;
 use Guzzle\Service\Description\XmlDescriptionBuilder;
@@ -36,7 +36,7 @@ class ComputeClient extends AbstractClient
         $config = Inspector::prepareConfig($config, $default, $required);
         $client = new self($config->get('base_url'), $config->get('identity'),$config->get('username'),$config->get('password'));
         $client->setConfig($config);
-        $client->getEventManager()->attach(new IdentityAuthObserver(), 0);
+        $client->getEventDispatcher()->addSubscriber(new IdentityAuthObserver());
         
         return $client;
     }

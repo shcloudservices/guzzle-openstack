@@ -5,30 +5,24 @@
 
 namespace Guzzle\Openstack\Common;
 
-use Guzzle\Common\Event\Observer;
-use Guzzle\Common\Event\Subject;
-
 /**
  * Observer to manage authentication for Openstack Clients
- *
- * @author  Andreina Romero, Adrian Moya
  */
-class IdentityAuthObserver implements Observer{
-    public function update(Subject $subject, $event, $context = null)
+class IdentityAuthObserver implements Symfony\Component\EventDispatcher\EventSubscriberInterface{
+
+    public static function getSubscribedEvents()
+    {
+        return array(
+            'request.create' => 'onRequestCreate'
+        );
+    }    
+    
+    public function onRequestCreate(Guzzle\Common\Event $event)
     {       
         $username = $subject->getUsername();
         $password = $subject->getPassword();
-        if ($event == 'request.create') {
-            $token = $subject->getIdentity()->getToken($username, $password);
-            $context->setHeader('X-Auth-Token', $token);
-        }
-        
-        elseif($event == 'request.failure') {
-            if ($context->getCode() == 401) {
-                $subject->getIdentity()->getToken($username, $password, true);
-                $subject->execute($subject->getLastCommand());
-            }
-        }
+        $token = $subject->getIdentity()->getToken($username, $password);
+        $context->setHeader('X-Auth-Token', $token);
     }
 }
 
