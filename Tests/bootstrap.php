@@ -1,24 +1,32 @@
 <?php
 
-require_once $_SERVER['GUZZLE'] . '/vendor/Symfony/Component/ClassLoader/UniversalClassLoader.php';
+error_reporting(E_ALL | E_STRICT);
 
-use Symfony\Component\ClassLoader\UniversalClassLoader;
+// Ensure that composer has installed all dependencies
+if (!file_exists(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'composer.lock')) {
+    die("Dependencies must be installed using composer:\n\ncomposer.phar install --install-suggests\n\n"
+        . "See https://github.com/composer/composer/blob/master/README.md for help with installing composer\n");
+}
 
-$loader = new UniversalClassLoader();
-$loader->registerNamespaces(array(
-    'Guzzle' => $_SERVER['GUZZLE'] . '/src',
-    'Guzzle\\Tests' => $_SERVER['GUZZLE'] . '/tests'
-));
-$loader->register();
+require_once 'PHPUnit/TextUI/TestRunner.php';
 
-// Autoload classes for guzzle-openstack-service
+// Register an autoloader for the client being tested
 spl_autoload_register(function($class) {
-    if (0 === strpos($class, 'Guzzle\\Openstack\\')) {
-        $path = implode('/', array_slice(explode('\\', $class), 2)) . '.php';
-        require_once __DIR__ . '/../' . $path;
-        return true;
+    if (0 === strpos($class, 'Guzzle\Openstack')) {
+        $class = str_replace('Guzzle\Openstack', '', $class);
+        if ('\\' != DIRECTORY_SEPARATOR) {
+            $class = dirname(__DIR__) . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
+        } else {
+            $class = dirname(__DIR__) . DIRECTORY_SEPARATOR . $class . '.php';
+        }
+        if (file_exists($class)) {
+            require $class;
+        }
     }
 });
+
+// Include the composer autoloader
+$loader = require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . '.composer' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 // Register services with the GuzzleTestCase
 Guzzle\Tests\GuzzleTestCase::setMockBasePath(__DIR__ . DIRECTORY_SEPARATOR . 'mock');
