@@ -32,7 +32,9 @@ class IdentityClient extends AbstractClient
         $config = Inspector::prepareConfig($config, $default, $required);        
         $client = new self($config->get('identity'),$config->get('username'),$config->get('password'));
         $client->setConfig($config);
-        $client->getEventDispatcher()->addSubscriber(new IdentityAuthObserver());
+        $observer = new IdentityAuthObserver();
+        var_dump($observer);
+        $client->getEventDispatcher()->addSubscriber($observer);
         return $client;
     }
 

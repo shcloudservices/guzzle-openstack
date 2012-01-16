@@ -14,12 +14,14 @@ class IdentityAuthObserver implements \Symfony\Component\EventDispatcher\EventSu
     public static function getSubscribedEvents()
     {
         return array(
-            'request.create' => 'onRequestCreate'
+            'client.create_request' => 'onRequestCreate'
         );
     }    
     
     public function onRequestCreate(\Guzzle\Common\Event $event)
     {               
+        //$subject = ???
+        //$context = ???
         $username = $subject->getUsername();
         $password = $subject->getPassword();
         $token = $subject->getIdentity()->getToken($username, $password);
