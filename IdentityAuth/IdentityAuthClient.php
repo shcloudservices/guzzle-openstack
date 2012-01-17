@@ -69,17 +69,32 @@ class IdentityAuthClient extends Client
     public function getToken($username, $password, $tenantid='', $forceRefresh = false)
     {
         $key = $username . '_' . $password . '_' . $tenantid;
-        if ($forceRefresh || !array_key_exists($key, $this->tokenCache)) {
-            try {
-            $response = $this->getCommand('authenticate', array('username'=>$username, 
-                'password'=>$password, 'tenantid'=>$tenantid))->execute()->getResult();
-            }
-            catch(BadResponseException $e) {
-                throw new OpenstackException($e);
-            }
-            $this->tokenCache[$key] = $response['access']['token']['id'];
+        if($forceRefresh || !array_key_exists($key, $this->tokenCache)) {
+            echo "No existe el token lo voy a crear\n";
+            $this->tokenCache[$key] = $this->executeAuthCommand($username, $password, $tenantid);
+            echo "token creado: " . $this->tokenCache[$key] . "\n";
         }
-
+        else {
+            echo "Chequeará el token: " . $this->tokenCache[$key] . " con key: " . $key . "\n";
+            $response = $this->getCommand('CheckToken', 
+                array('token'=>$this->tokenCache[$key], 
+                    'tenantid'=>$tenantid))->execute()->getResponse();
+            if ($response->getStatusCode() != "200") {
+                $this->tokenCache[$key] = $this->executeAuthCommand($username, $password, $tenantid);
+            } 
+        }
+        
         return $this->tokenCache[$key];
+    }
+    
+    private function executeAuthCommand($username, $password, $tenantid) {
+        try {
+                $response = $this->getCommand('authenticate', array('username'=>$username, 
+                'password'=>$password, 'tenantid'=>$tenantid))->execute()->getResult();
+        }
+        catch(BadResponseException $e) {
+            throw new OpenstackException($e);
+        }
+        return $response['access']['token']['id'];
     }
 }
