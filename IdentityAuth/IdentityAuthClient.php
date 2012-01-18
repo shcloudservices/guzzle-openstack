@@ -70,12 +70,9 @@ class IdentityAuthClient extends Client
     {
         $key = $username . '_' . $password . '_' . $tenantid;
         if($forceRefresh || !array_key_exists($key, $this->tokenCache)) {
-            echo "No existe el token lo voy a crear\n";
             $this->tokenCache[$key] = $this->executeAuthCommand($username, $password, $tenantid);
-            echo "token creado: " . $this->tokenCache[$key] . "\n";
         }
         else {
-            echo "Chequeará el token: " . $this->tokenCache[$key] . " con key: " . $key . "\n";
             $response = $this->getCommand('CheckToken', 
                 array('token'=>$this->tokenCache[$key], 
                     'tenantid'=>$tenantid))->execute()->getResponse();
@@ -89,12 +86,13 @@ class IdentityAuthClient extends Client
     
     private function executeAuthCommand($username, $password, $tenantid) {
         try {
-                $response = $this->getCommand('authenticate', array('username'=>$username, 
-                'password'=>$password, 'tenantid'=>$tenantid))->execute()->getResult();
+            $command = $this->getCommand('authenticate', array('username'=>$username, 
+                'password'=>$password, 'tenantid'=>$tenantid));
+            $result = $command->execute()->getResult();
         }
         catch(BadResponseException $e) {
             throw new OpenstackException($e);
         }
-        return $response['access']['token']['id'];
+        return $result['access']['token']['id'];
     }
 }

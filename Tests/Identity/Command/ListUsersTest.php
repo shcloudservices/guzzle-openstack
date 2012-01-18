@@ -12,8 +12,7 @@ class ListUsersTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $authclient = \Guzzle\Openstack\IdentityAuth\IdentityAuthClient::factory(array('username' => 'username', 'password' => 'password', 'ip' => '192.168.4.100'));
         $client = \Guzzle\Openstack\Identity\IdentityClient::factory(array('identity' => $authclient, 'username'=>'username', 'password'=>'password'));
-        $this->setMockResponse($client->getIdentity(), 'identity_auth/AuthenticateAuthorized');
-        $this->setMockResponse($authclient, 'identity_auth/CheckToken');
+        $this->setMockResponse($client->getIdentity(), array('identity_auth/AuthenticateAuthorized','identity_auth/CheckToken'));  
         $this->setMockResponse($client, 'identity/ListUsers');        
         $command = $client->getCommand('ListUsers');
         $command->prepare();
