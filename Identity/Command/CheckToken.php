@@ -3,7 +3,7 @@
  * @license See the LICENSE file that was distributed with this source code.
  */
 
-namespace Guzzle\Openstack\Identity\Command;
+namespace Guzzle\Openstack\IdentityAuth\Command;
 
 use Guzzle\Openstack\Common\AbstractJsonCommand;
 
