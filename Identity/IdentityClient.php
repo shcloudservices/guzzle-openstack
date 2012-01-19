@@ -22,6 +22,7 @@ class IdentityClient extends AbstractClient
      *    username - API username
      *    password - API password
      *    identity - IdentityAuthClient for authentication
+     *    tenantid - Tenant Id
      *
      * @return IdentityClient
      */
@@ -30,7 +31,7 @@ class IdentityClient extends AbstractClient
         $default = array();
         $required = array('identity', 'username', 'password');
         $config = Inspector::prepareConfig($config, $default, $required);        
-        $client = new self($config->get('identity'),$config->get('username'),$config->get('password'));
+        $client = new self($config->get('identity'),$config->get('username'),$config->get('password'),$config->get('tenantid'));
         $client->setConfig($config);
         $client->getEventDispatcher()->addSubscriber(new IdentityAuthObserver());
         return $client;
@@ -42,13 +43,15 @@ class IdentityClient extends AbstractClient
      * @param IdentityAuthClient $identity IdentityAuthClient for authentication
      * @param string $username Username
      * @param string $password Password
+     * @param string $tenant Tenant ID (for scoped access)
      */
-    public function __construct($identity, $username, $password)
+    public function __construct($identity, $username, $password, $tenantid='')
     {
         parent::__construct($identity->getBaseurl());
         $this->identity = $identity;
         $this->username = $username;
         $this->password = $password;
+        $this->tenantid = $tenantid;
     }
     
 }

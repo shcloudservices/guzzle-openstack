@@ -1,6 +1,6 @@
 <?php
 
-namespace Guzzle\Openstack\Tests\IdentityAuth\Command;
+namespace Guzzle\Openstack\Tests\Identity\Command;
 
 /**
  * Check Token command unit test
@@ -10,9 +10,10 @@ class CheckTokenTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testCheckToken()
     {
-        $authclient = \Guzzle\Openstack\IdentityAuth\IdentityAuthClient::factory(array('username' => 'username', 'password' => 'password', 'ip' => '192.168.4.100', 'port'=>'35357'));
-        $this->setMockResponse($authclient, 'identity_auth/CheckToken');        
-        $command = $authclient->getCommand('CheckToken');
+        $authclient = \Guzzle\Openstack\IdentityAuth\IdentityAuthClient::factory(array('username' => 'username', 'password' => 'password', 'ip' => '192.168.4.100', 'port' => '35357'));
+        $client = \Guzzle\Openstack\Identity\IdentityClient::factory(array('identity' => $authclient, 'username'=>'username', 'password'=>'password'));
+        $this->setMockResponse($client->getIdentity(), array('identity_auth/AuthenticateAuthorized'));  
+        $command = $client->getCommand('CheckToken');
         $command->setToken('token');
         $command->prepare();
       
@@ -21,8 +22,7 @@ class CheckTokenTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals('HEAD', $command->getRequest()->getMethod());
                 
         //Check for authentication header
-        //Lo comenté, es correcto verdad?
-        //$this->assertTrue($command->getRequest()->hasHeader('X-Auth-Token'));
+        $this->assertTrue($command->getRequest()->hasHeader('X-Auth-Token'));
                                
     }
 }

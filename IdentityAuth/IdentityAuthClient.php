@@ -71,16 +71,7 @@ class IdentityAuthClient extends Client
         $key = $username . '_' . $password . '_' . $tenantid;
         if($forceRefresh || !array_key_exists($key, $this->tokenCache)) {
             $this->tokenCache[$key] = $this->executeAuthCommand($username, $password, $tenantid);
-        }
-        else {
-            $response = $this->getCommand('CheckToken', 
-                array('token'=>$this->tokenCache[$key], 
-                    'tenantid'=>$tenantid))->execute()->getResponse();
-            if ($response->getStatusCode() != "200") {
-                $this->tokenCache[$key] = $this->executeAuthCommand($username, $password, $tenantid);
-            } 
-        }
-        
+        }        
         return $this->tokenCache[$key];
     }
     
