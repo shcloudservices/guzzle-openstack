@@ -1,6 +1,6 @@
-    HTTP/1.1 201 Created
+HTTP/1.1 201 Created
 Content-Type: application/json; charset=UTF-8
-Content-Length: 97
-Date: Sat, 07 Jan 2012 06:44:34 GMT
+Content-Length: 116
+Date: Sat, 07 Jan 2012 01:41:07 GMT
 
-{"tenant": {"enabled": true, "description": "A description", "name": "Tenantname", "id": "4"}}
+{"user": {"email": "myemail@email.com", "password": "mypassword", "enabled": true, "id": "4", "name": "myusername"}}

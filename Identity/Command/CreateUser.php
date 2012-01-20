@@ -6,25 +6,27 @@
 namespace Guzzle\Openstack\Identity\Command;
 
 use Guzzle\Openstack\Common\AbstractJsonCommand;
+
 /**
- * Command to create user
+ * Command to create a user
  * @guzzle email doc="Email of the new user" required="true"
- * @guzzle username doc="Name of the new user"
- * @guzzle password doc="Password of the new user"
+ * @guzzle name doc="Name of the new user" required="true"
+ * @guzzle password doc="Password of the new user" required="true"
  * @guzzle tenant doc="Tenant of the new user"
- *
+ * @guzzle enabled doc="Enabled state of new user"
  */
 class CreateUser extends AbstractJsonCommand {
+
     /**
      * Set the user name
      *
-     * @param string $username
+     * @param string $name
      *
      * @return CreateUser
      */
-    public function setUsername($username)
+    public function setName($name)
     {
-        return $this->set('username', $username);
+        return $this->set('name', $name);
     }
     
     /**
@@ -63,14 +65,27 @@ class CreateUser extends AbstractJsonCommand {
         return $this->set('tenant', $tenant);
     }
     
+    /**
+     * Set the user status
+     *
+     * @param boolean $enabled
+     *
+     * @return CreateTenant
+     */
+    public function setEnabled($enabled)
+    {
+        return $this->set('enabled', $enabled);
+    }        
+    
     protected function build()
     {       
         $data = array(
             "user" => array(
-                "username"=> $this->get('username'),
+                "name"=> $this->get('username'),
                 "email" => $this->get('email'),
                 "password" => $this->get('password'),
                 "tenant" => $this->get('tenant'),
+                "enabled"=> $this->get('enabled')
             )
         );
         $body = json_encode($data);        

@@ -8,18 +8,18 @@ namespace Guzzle\Openstack\Identity\Command;
 use Guzzle\Openstack\Common\AbstractJsonCommand;
 
 /**
- * Delete a tenant
+ * Delete an user
  *
- * @guzzle id doc="Id of the tenant to delete" required="true"
+ * @guzzle id doc="Id of the user to delete" required="true"
  */
-class DeleteTenant extends AbstractJsonCommand
+class DeleteUser extends AbstractJsonCommand
 {
     /**
-     * Set the tenant id
+     * Set the user id
      *
      * @param string $id
      *
-     * @return DeleteTenant
+     * @return DeleteUser
      */
     public function setId($id)
     {
@@ -28,6 +28,6 @@ class DeleteTenant extends AbstractJsonCommand
    
     protected function build()
     {       
-        $this->request = $this->client->delete('tenants/'.$this->get('id'));
+        $this->request = $this->client->delete('user/'.$this->get('id'));
     }
 }

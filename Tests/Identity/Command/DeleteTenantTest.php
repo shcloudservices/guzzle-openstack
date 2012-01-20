@@ -24,10 +24,6 @@ class DeleteTenantTest extends \Guzzle\Tests\GuzzleTestCase
                 
         //Check for authentication header
         $this->assertTrue($command->getRequest()->hasHeader('X-Auth-Token'));
-                        
-//        $client->execute($command);
-//      
-//        $result = $command->getResult();
-//        $this->assertEquals();
+
     }
 }
