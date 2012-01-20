@@ -1,28 +1,42 @@
 <?php
-
 /**
  * @license See the LICENSE file that was distributed with this source code.
  */
+
 namespace Guzzle\Openstack\Identity\Command;
 
 use Guzzle\Openstack\Common\AbstractJsonCommand;
 
 /**
- * Command to create a user
- * @guzzle email doc="Email of the new user" required="true"
- * @guzzle name doc="Name of the new user" required="true"
- * @guzzle password doc="Password of the new user" required="true"
- * @guzzle tenant doc="Tenant of the new user"
- * @guzzle enabled doc="Enabled state of new user"
+ * Update user
+ *
+ * @guzzle id doc="User ID" required="true"
+ * @guzzle name doc="New name for the user"
+ * @guzzle password doc="New password"
+ * @guzzle tenant doc="New tenant for the user"
+ * @guzzle enabled doc="New status of the user"
  */
-class CreateUser extends AbstractJsonCommand {
+class UpdateUser extends AbstractJsonCommand
+{
 
+    /**
+     * Set the tenant ID
+     *
+     * @param string $id
+     *
+     * @return UpdateUser
+     */
+    public function setId($id)
+    {
+        return $this->set('id', $id);
+    }        
+    
     /**
      * Set the user name
      *
      * @param string $name
      *
-     * @return CreateUser
+     * @return UpdateUser
      */
     public function setName($name)
     {
@@ -34,7 +48,7 @@ class CreateUser extends AbstractJsonCommand {
      *
      * @param string $email
      *
-     * @return CreateUser
+     * @return UpdateUser
      */
     public function setEmail($email)
     {
@@ -46,7 +60,7 @@ class CreateUser extends AbstractJsonCommand {
      *
      * @param string $password
      *
-     * @return CreateUser
+     * @return UpdateUser
      */
     public function setPassword($password)
     {
@@ -58,7 +72,7 @@ class CreateUser extends AbstractJsonCommand {
      *
      * @param string $tenant
      *
-     * @return CreateUser
+     * @return UpdateUser
      */
     public function setTenant($tenant)
     {
@@ -70,12 +84,12 @@ class CreateUser extends AbstractJsonCommand {
      *
      * @param boolean $enabled
      *
-     * @return CreateTenant
+     * @return UpdateTenant
      */
     public function setEnabled($enabled)
     {
         return $this->set('enabled', $enabled);
-    }        
+    } 
     
     protected function build()
     {       
@@ -89,8 +103,6 @@ class CreateUser extends AbstractJsonCommand {
             )
         );
         $body = json_encode($data);        
-        $this->request = $this->client->post('users', null, $body);
+        $this->request = $this->client->put('users/'.$this->get('id'), null, $body);
     }
 }
-
-?>

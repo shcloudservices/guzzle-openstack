@@ -28,6 +28,6 @@ class DeleteUser extends AbstractJsonCommand
    
     protected function build()
     {       
-        $this->request = $this->client->delete('user/'.$this->get('id'));
+        $this->request = $this->client->delete('users/'.$this->get('id'));
     }
 }

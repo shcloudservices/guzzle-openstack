@@ -23,7 +23,7 @@ class DeleteUserTest extends \Guzzle\Tests\GuzzleTestCase
         $command->prepare();
       
         //Check method and resource
-        $this->assertEquals('http://192.168.4.100:35357/v2.0/user/2', $command->getRequest()->getUrl());
+        $this->assertEquals('http://192.168.4.100:35357/v2.0/users/2', $command->getRequest()->getUrl());
         $this->assertEquals('DELETE', $command->getRequest()->getMethod());
                 
         //Check for authentication header

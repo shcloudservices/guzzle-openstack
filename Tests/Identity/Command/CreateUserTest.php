@@ -27,7 +27,7 @@ class CreateUserTest extends \Guzzle\Tests\GuzzleTestCase
         $command->prepare();
       
         //Check method and resource
-        $this->assertEquals('http://192.168.4.100:35357/v2.0/user', $command->getRequest()->getUrl());
+        $this->assertEquals('http://192.168.4.100:35357/v2.0/users', $command->getRequest()->getUrl());
         $this->assertEquals('POST', $command->getRequest()->getMethod());
                 
         //Check for authentication header
