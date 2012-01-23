@@ -56,11 +56,16 @@ class CreateTenant extends AbstractJsonCommand
     {       
         $data = array(
             "tenant" => array(
-                "name"=> $this->get('name'),
-                "description" => $this->get('description'),
-                "enabled"=> $this->get('enabled')
+                "name"=> $this->get('name')                
             )
         );
+        if($this->hasKey('description')){
+            $data['tenant']['description'] = $this->get('description');
+        }
+        if($this->hasKey('enabled')){
+            $data['tenant']['enabled'] = $this->get('enabled');
+        }
+
         $body = json_encode($data);        
         $this->request = $this->client->post('tenants', null, $body);
     }

@@ -57,10 +57,15 @@ class UpdateTenant extends AbstractJsonCommand
     {       
         $data = array(
             "tenant" => array(
-                "description" => $this->get('description'),
-                "enabled"=> $this->get('enabled')
+                "id" => $this->get('id'),
+                "description" => $this->get('description')
             )
         );
+        
+        if($this->hasKey('enabled')){
+            $data['tenant']['enabled'] = $this->get('enabled');
+        }
+        
         $body = json_encode($data);        
         $this->request = $this->client->put('tenants/'.$this->get('id'), null, $body);
     }

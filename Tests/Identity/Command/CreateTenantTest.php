@@ -8,13 +8,17 @@ namespace Guzzle\Openstack\Tests\Identity\Command;
 class CreateTenantsTest extends \Guzzle\Tests\GuzzleTestCase
 {
 
-    public function testCreateTenant()
+    public function setUp()
     {
         $authclient = \Guzzle\Openstack\IdentityAuth\IdentityAuthClient::factory(array('username' => 'username', 'password' => 'password', 'ip' => '192.168.4.100', 'port'=>'35357'));
-        $client = \Guzzle\Openstack\Identity\IdentityClient::factory(array('identity' => $authclient, 'username'=>'username', 'password'=>'password'));
-        $this->setMockResponse($client->getIdentity(), 'identity_auth/AuthenticateAuthorized');        
-        $this->setMockResponse($client, 'identity/CreateTenant');        
-        $command = $client->getCommand('CreateTenant');
+        $this->client = \Guzzle\Openstack\Identity\IdentityClient::factory(array('identity' => $authclient, 'username'=>'username', 'password'=>'password'));        
+        $this->setMockResponse($this->client->getIdentity(), 'identity_auth/AuthenticateAuthorized');                
+    }
+    
+    public function testCreateTenant()
+    {
+        $this->setMockResponse($this->client, 'identity/CreateTenant');        
+        $command = $this->client->getCommand('CreateTenant');
         $command->setName('Tenantname');
         $command->setDescription('A description');
         $command->setEnabled(true);
@@ -27,7 +31,7 @@ class CreateTenantsTest extends \Guzzle\Tests\GuzzleTestCase
         //Check for authentication header
         $this->assertTrue($command->getRequest()->hasHeader('X-Auth-Token'));
                         
-        $client->execute($command);
+        $this->client->execute($command);
       
         $result = $command->getResult();
         $this->assertTrue(is_array($result));
@@ -35,4 +39,11 @@ class CreateTenantsTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertTrue(array_key_exists('tenant', $result));
         
     }
+    
+    public function testNameRequired()
+    {
+        $command = $this->client->getCommand('CreateTenant',  array());
+        $this->setExpectedException('InvalidArgumentException');
+        $command->prepare();
+    } 
 }

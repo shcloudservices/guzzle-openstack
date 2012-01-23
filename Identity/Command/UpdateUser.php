@@ -95,13 +95,26 @@ class UpdateUser extends AbstractJsonCommand
     {       
         $data = array(
             "user" => array(
-                "name"=> $this->get('username'),
-                "email" => $this->get('email'),
-                "password" => $this->get('password'),
-                "tenant" => $this->get('tenant'),
-                "enabled"=> $this->get('enabled')
+                "id"=> $this->get('id'),
             )
         );
+        
+        if($this->hasKey('name')){
+            $data['user']['name'] = $this->get('username');
+        }
+        if($this->hasKey('email')){
+            $data['user']['email'] = $this->get('email');
+        }
+        if($this->hasKey('password')){
+            $data['user']['password'] = $this->get('password');
+        }
+        if($this->hasKey('tenant')){
+            $data['user']['tenant'] = $this->get('tenant');
+        }
+        if($this->hasKey('enabled')){
+            $data['user']['enabled'] = $this->get('enabled');
+        }
+        
         $body = json_encode($data);        
         $this->request = $this->client->put('users/'.$this->get('id'), null, $body);
     }

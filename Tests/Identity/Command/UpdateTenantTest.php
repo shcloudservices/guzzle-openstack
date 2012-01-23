@@ -8,13 +8,17 @@ namespace Guzzle\Openstack\Tests\Identity\Command;
 class UpdateTenantsTest extends \Guzzle\Tests\GuzzleTestCase
 {
 
-    public function testUpdateTenant()
+    public function setUp()
     {
         $authclient = \Guzzle\Openstack\IdentityAuth\IdentityAuthClient::factory(array('username' => 'username', 'password' => 'password', 'ip' => '192.168.4.100', 'port'=>'35357'));
-        $client = \Guzzle\Openstack\Identity\IdentityClient::factory(array('identity' => $authclient, 'username'=>'username', 'password'=>'password'));
-        $this->setMockResponse($client->getIdentity(), 'identity_auth/AuthenticateAuthorized');        
-        $this->setMockResponse($client, 'identity/UpdateTenant');        
-        $command = $client->getCommand('UpdateTenant');
+        $this->client = \Guzzle\Openstack\Identity\IdentityClient::factory(array('identity' => $authclient, 'username'=>'username', 'password'=>'password'));        
+        $this->setMockResponse($this->client->getIdentity(), 'identity_auth/AuthenticateAuthorized');                
+    }
+    
+    public function testUpdateTenant()
+    {
+        $this->setMockResponse($this->client, 'identity/UpdateTenant');        
+        $command = $this->client->getCommand('UpdateTenant');
         
         $command->setId('2');
         $command->setDescription('New Desc');
@@ -28,12 +32,19 @@ class UpdateTenantsTest extends \Guzzle\Tests\GuzzleTestCase
         //Check for authentication header
         $this->assertTrue($command->getRequest()->hasHeader('X-Auth-Token'));
                         
-        $client->execute($command);
+        $this->client->execute($command);
       
         $result = $command->getResult();
         $this->assertTrue(is_array($result));
         
         $this->assertTrue(array_key_exists('tenant', $result));
         
+    }
+    
+    public function testIdRequired()
+    {
+        $command = $this->client->getCommand('UpdateTenant', array());
+        $this->setExpectedException('InvalidArgumentException');
+        $command->prepare();
     }
 }
