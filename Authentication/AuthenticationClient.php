@@ -3,7 +3,7 @@
  * @license See the LICENSE file that was distributed with this source code.
  */
 
-namespace Guzzle\Openstack\IdentityAuth;
+namespace Guzzle\Openstack\Authentication;
 
 use Guzzle\Service\Inspector;
 use Guzzle\Http\Message\RequestInterface;
@@ -12,7 +12,7 @@ use Guzzle\Service\Description\XmlDescriptionBuilder;
 use Guzzle\Http\Message\BadResponseException;
 use Guzzle\Openstack\Common\OpenstackException;
 
-class IdentityAuthClient extends Client
+class AuthenticationClient extends Client
 {
     protected $tokenCache;
     
@@ -28,7 +28,7 @@ class IdentityAuthClient extends Client
      *    api_version - API version
      *    ip - IP Address
      *
-     * @return IdentityAuthClient
+     * @return AuthenticationClient
      */
     public static function factory($config)
     {
@@ -48,7 +48,7 @@ class IdentityAuthClient extends Client
     }
 
     /**
-     * IdentityAuthClient constructor
+     * AuthenticationClient constructor
      *
      * @param string $baseUrl Base URL of the web service
      */
@@ -77,7 +77,7 @@ class IdentityAuthClient extends Client
     
     private function executeAuthCommand($username, $password, $tenantid) {
         try {
-            $command = $this->getCommand('authenticate', array('username'=>$username, 
+            $command = $this->getCommand('Authenticate', array('username'=>$username, 
                 'password'=>$password, 'tenantid'=>$tenantid));
             $result = $command->execute()->getResult();
         }

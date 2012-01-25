@@ -1,34 +1,34 @@
 <?php
 
-namespace Guzzle\Openstack\Tests\IdentityAuth;
+namespace Guzzle\Openstack\Tests\Authentication;
 
 /**
- * IdentityAuthClient unit tests.
+ * AuthenticationClient unit tests.
  */
-class IdentityAuthClientTest extends \Guzzle\Tests\GuzzleTestCase
+class AuthenticationClientTest extends \Guzzle\Tests\GuzzleTestCase
 {
 
     public function testGetToken()
     {
-        $client = $this->getServiceBuilder()->get('test.identityauth');
-        $this->setMockResponse($client, 'identity_auth/AuthenticateUnauthorized'); 
+        $client = $this->getServiceBuilder()->get('test.authentication');
+        $this->setMockResponse($client, 'authentication/AuthenticateUnauthorized'); 
         
         //Check exception when unauthorized
         $this->setExpectedException('Guzzle\Openstack\Common\OpenstackException');
         $client->getToken('username','password');
         
         //Check success 
-        $this->setMockResponse($client, 'identity_auth/AuthenticateAuthorized');
+        $this->setMockResponse($client, 'authentication/AuthenticateAuthorized');
         $token = $client->getToken('username','password');
         $this->assertEquals('admintoken', $token);
         
         //Check autorefresh token
-        $this->setMockResponse($client, array('identity_auth/AuthenticateUnauthorized','identity_auth/AuthenticateAuthorized')); 
+        $this->setMockResponse($client, array('authentication/AuthenticationUnauthorized','authentication/AuthenticateAuthorized')); 
         $token = $client->getToken('username','password');
         $this->assertEquals('admintoken', $token);
 
         //Check exception if double unauthorized
-        $this->setMockResponse($client, array('identity_auth/AuthenticateUnauthorized','identity_auth/AuthenticateUnauthorized')); 
+        $this->setMockResponse($client, array('authentication/AuthenticationUnauthorized','authentication/AuthenticationUnauthorized')); 
         $this->setExpectedException('Guzzle\Openstack\Common\OpenstackException');
         $client->getToken('username','password');        
     }

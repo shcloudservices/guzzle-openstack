@@ -10,7 +10,7 @@ use Guzzle\Common\Event;
 /**
  * Observer to manage authentication for Openstack Clients
  */
-class IdentityAuthObserver implements \Symfony\Component\EventDispatcher\EventSubscriberInterface
+class AuthenticationObserver implements \Symfony\Component\EventDispatcher\EventSubscriberInterface
 {
     public static function getSubscribedEvents()
     {

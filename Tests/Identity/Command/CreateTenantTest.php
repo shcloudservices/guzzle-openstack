@@ -10,9 +10,9 @@ class CreateTenantsTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testCreateTenant()
     {
-        $authclient = \Guzzle\Openstack\IdentityAuth\IdentityAuthClient::factory(array('username' => 'username', 'password' => 'password', 'ip' => '192.168.4.100', 'port'=>'35357'));
+        $authclient = \Guzzle\Openstack\Authentication\AuthenticationClient::factory(array('username' => 'username', 'password' => 'password', 'ip' => '192.168.4.100', 'port'=>'35357'));
         $client = \Guzzle\Openstack\Identity\IdentityClient::factory(array('identity' => $authclient, 'username'=>'username', 'password'=>'password'));
-        $this->setMockResponse($client->getIdentity(), 'identity_auth/AuthenticateAuthorized');        
+        $this->setMockResponse($client->getIdentity(), 'authentication/AuthenticateAuthorized');        
         $this->setMockResponse($client, 'identity/CreateTenant');        
         $command = $client->getCommand('CreateTenant');
         $command->setName('Tenantname');

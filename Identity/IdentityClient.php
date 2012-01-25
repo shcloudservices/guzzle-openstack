@@ -9,7 +9,7 @@ use Guzzle\Service\Inspector;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Service\Client;
 use Guzzle\Service\Description\XmlDescriptionBuilder;
-use Guzzle\Openstack\Common\IdentityAuthObserver;
+use Guzzle\Openstack\Common\AuthenticationObserver;
 use Guzzle\Openstack\Common\AbstractClient;
 
 class IdentityClient extends AbstractClient
@@ -21,7 +21,7 @@ class IdentityClient extends AbstractClient
      * @param array|Collection $config Configuration data. Array keys:
      *    username - API username
      *    password - API password
-     *    identity - IdentityAuthClient for authentication
+     *    identity - AuthenticationClient for authentication
      *    tenantid - Tenant Id
      *
      * @return IdentityClient
@@ -33,14 +33,14 @@ class IdentityClient extends AbstractClient
         $config = Inspector::prepareConfig($config, $default, $required);        
         $client = new self($config->get('identity'),$config->get('username'),$config->get('password'),$config->get('tenantid'));
         $client->setConfig($config);
-        $client->getEventDispatcher()->addSubscriber(new IdentityAuthObserver());
+        $client->getEventDispatcher()->addSubscriber(new AuthenticationObserver());
         return $client;
     }
 
     /**
      * IdentityClient constructor
      *
-     * @param IdentityAuthClient $identity IdentityAuthClient for authentication
+     * @param AuthenticationClient $identity AuthenticationClient for authentication
      * @param string $username Username
      * @param string $password Password
      * @param string $tenant Tenant ID (for scoped access)

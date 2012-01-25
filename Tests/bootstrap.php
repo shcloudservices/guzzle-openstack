@@ -41,14 +41,14 @@ Guzzle\Tests\GuzzleTestCase::setServiceBuilder(\Guzzle\Service\ServiceBuilder::f
             'ip' => '192.168.4.100'
         )
     ),
-    'test.identityauth' => array(
+    'test.authentication' => array(
         'extends' => 'test.abstract.os',
-        'class' => 'Guzzle.Openstack.IdentityAuth.IdentityAuthClient'
+        'class' => 'Guzzle.Openstack.Authentication.AuthenticationClient'
     ),
     'test.identity' => array(
         'class' => 'Guzzle.Openstack.Identity.IdentityClient',
         'params' => array(
-            'identity'=> 'test.identityauth'
+            'identity'=> 'test.Authentication'
         )
     ),
     'test.compute' => array(
