@@ -10,7 +10,7 @@ use Guzzle\Common\Event;
 /**
  * Observer to manage authentication for Openstack Clients
  */
-class IdentityAuthObserver implements \Symfony\Component\EventDispatcher\EventSubscriberInterface
+class AuthenticationObserver implements \Symfony\Component\EventDispatcher\EventSubscriberInterface
 {
     public static function getSubscribedEvents()
     {
@@ -22,7 +22,7 @@ class IdentityAuthObserver implements \Symfony\Component\EventDispatcher\EventSu
 
     /**
      * Add authentication token as a header for requests
-     * 
+     *
      * @param Event $event
      */
     public function onRequestCreate(Event $event)
@@ -31,8 +31,9 @@ class IdentityAuthObserver implements \Symfony\Component\EventDispatcher\EventSu
         $token = $client->getIdentity()->getToken($client->getUsername(), $client->getPassword(), $client->getTenantId());
         $event['request']->setHeader('X-Auth-Token', $token);
 
-        $event['request']->setOnComplete(function($request, $response, $default) {
-
+        $event['request']->getEventDispatcher()->addListener('request.error', function(Event $event) {
+            $request = $event['request'];
+            $response = $event['response'];
             // Automatically retry if not authorized
             if ($response->getStatusCode() == 401 && !$request->getParams()->get('auth_retry')) {
                 $client = $request->getParams()->get('command')->getClient();
@@ -40,11 +41,11 @@ class IdentityAuthObserver implements \Symfony\Component\EventDispatcher\EventSu
                 $cloned = clone $request;
                 $cloned->getParams()->set('auth_retry', 1);
                 $cloned->setHeader('X-Auth-Token', $token);
-                return $cloned->send();
+                $event['request']->setResponse($cloned->send());
+                // Prevent other event listeners from firing
+                $event->stopPropagation();
             }
-            //Call default onComplete method
-            call_user_func($default, $request, $response);
-        });
+        }, -200);
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace Guzzle\Openstack\Tests\IdentityAuth\Command;
+namespace Guzzle\Openstack\Tests\Authentication\Command;
 
 /**
  * Authenticate command unit test
@@ -11,8 +11,8 @@ class AuthenticateTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testAuthenticate()
     {
-        $client = $this->getServiceBuilder()->get('test.identityauth');
-        $this->setMockResponse($client, 'identity_auth/AuthenticateAuthorized');        
+        $client = $this->getServiceBuilder()->get('test.authentication');
+        $this->setMockResponse($client, 'authentication/AuthenticateAuthorized');        
         $command = $client->getCommand('Authenticate');
         $command->setUsername('username');
         $command->setPassword('password');

@@ -9,7 +9,7 @@ use Guzzle\Service\Inspector;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Openstack\Common\AbstractClient;
 use Guzzle\Service\Description\XmlDescriptionBuilder;
-use Guzzle\Openstack\Common\IdentityAuthObserver;
+use Guzzle\Openstack\Common\AuthenticationObserver;
 
 class ComputeClient extends AbstractClient
 {
@@ -36,7 +36,7 @@ class ComputeClient extends AbstractClient
         $config = Inspector::prepareConfig($config, $default, $required);
         $client = new self($config->get('base_url'), $config->get('identity'),$config->get('username'),$config->get('password'));
         $client->setConfig($config);
-        $client->getEventDispatcher()->addSubscriber(new IdentityAuthObserver());
+        $client->getEventDispatcher()->addSubscriber(new AuthenticationObserver());
         
         return $client;
     }
@@ -45,7 +45,7 @@ class ComputeClient extends AbstractClient
      * Client constructor
      *
      * @param string $baseUrl Base URL of the web service
-     * @param IdentityAuthClient $identity IdentityAuthClient for authentication
+     * @param AuthenticationClient $identity AuthenticationClient for authentication
      * @param string $username Username
      * @param string $password Password
      * 

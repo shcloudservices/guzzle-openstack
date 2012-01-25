@@ -10,9 +10,9 @@ class CreateUserTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function setUp()
     {
-        $authclient = \Guzzle\Openstack\IdentityAuth\IdentityAuthClient::factory(array('username' => 'username', 'password' => 'password', 'ip' => '192.168.4.100', 'port'=>'35357'));
+        $authclient = \Guzzle\Openstack\Authentication\AuthenticationClient::factory(array('username' => 'username', 'password' => 'password', 'ip' => '192.168.4.100', 'port'=>'35357'));
         $this->client = \Guzzle\Openstack\Identity\IdentityClient::factory(array('identity' => $authclient, 'username'=>'username', 'password'=>'password'));        
-        $this->setMockResponse($this->client->getIdentity(), 'identity_auth/AuthenticateAuthorized');                
+        $this->setMockResponse($this->client->getIdentity(), 'authentication/AuthenticateAuthorized');                
     }
     
     public function testCreateUser()
