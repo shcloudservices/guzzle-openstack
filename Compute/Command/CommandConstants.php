@@ -1,9 +1,11 @@
 <?php
 
+namespace Guzzle\Openstack\Compute\Command;
+
 /**
  * Names of compute api commands's
  */
-class Commands {
+class CommandConstants {
     /**
      * Command server
      */
