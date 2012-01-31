@@ -14,7 +14,6 @@ use Guzzle\Openstack\Common\OpenstackException;
 
 class AuthenticationClient extends Client
 {
-    protected $tokenCache;
     
     /**
      * Factory method to create a new IdentityClient
@@ -25,7 +24,7 @@ class AuthenticationClient extends Client
      *    port - API Port
      *    username - API username
      *    password - API password
-     *    api_version - API version
+     *    version - API version
      *    ip - IP Address
      *
      * @return AuthenticationClient
@@ -66,24 +65,53 @@ class AuthenticationClient extends Client
      * @param string $forceRefresh
      * @return string 
      */
-    public function getToken($username, $password, $tenantid='', $forceRefresh = false)
+    public function getToken($username, $password, $tenantName='', $forceRefresh = false)
     {
-        $key = $username . '_' . $password . '_' . $tenantid;
+        $key = $this->createKey($username, $password, $tenantName);
         if($forceRefresh || !array_key_exists($key, $this->tokenCache)) {
-            $this->tokenCache[$key] = $this->executeAuthCommand($username, $password, $tenantid);
+            $result =  $this->executeAuthCommand($username, $password, $tenantName);
+            $this->tokenCache[$key] = $result['access']['token']['id'];
         }        
         return $this->tokenCache[$key];
     }
     
-    private function executeAuthCommand($username, $password, $tenantid) {
+    /**
+     * Execute tokens command to bring authentication information's
+     * @param string $username 
+     * @param string $password
+     * @param string $tenantName
+     * @param string $forceRefresh
+     * @return string 
+     */
+    public function authentication($username, $password, $tenantName='')
+    {
+        $result = $this->executeAuthCommand($username, $password, $tenantName);
+        $this->initToken($result);
+       /*Corregir acceso, y creo que esto es necesario capturarlo sólo la primera
+        vez*/
+        return array("identityEndpoint" => $result['access']['serviceCatalog']['endpoints'],
+            "computeEndpoint" => $result['access']['serviceCatalog']['endpoints']);
+    }
+    
+    private function executeAuthCommand($username, $password, $tenantName) {
         try {
             $command = $this->getCommand('Authenticate', array('username'=>$username, 
-                'password'=>$password, 'tenantid'=>$tenantid));
+                'password'=>$password, 'tenantName'=>$tenantName));
             $result = $command->execute()->getResult();
         }
         catch(BadResponseException $e) {
             throw new OpenstackException($e);
         }
-        return $result['access']['token']['id'];
+        return $result;
+    }
+    
+    private function createKey($username, $password, $tenantName) {
+        return $username . '_' . $password . '_' . $tenantName;
+    }
+    
+    private function initToken($response)
+    {
+        $key = createKey($username, $password, $tenantName);
+        $this->tokenCache[$key] = $result['access']['token']['id'];
     }
 }

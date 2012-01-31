@@ -28,8 +28,8 @@ class ComputeClient extends AbstractClient
     {
         $default  = array(
             'base_url' => '{{scheme}}://{{ip}}:{{port}}/v{{version}}/wtf/',
-            'scheme' => 'https',
-            'version' => '2',
+            'scheme' => 'http',
+            'version' => '1.1',
             'port' => '8774'
         );
         $required = array('base_url','ip','identity','username','password');

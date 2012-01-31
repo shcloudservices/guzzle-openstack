@@ -9,7 +9,8 @@ class CommandConstants {
     /**
      * Command server
      */
-    const SERVER = "servers";
+    const SERVER = "ListServers";
+    const SERVER_DETAIL = "ServerDetails";
 }
 
 ?>

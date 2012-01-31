@@ -65,6 +65,9 @@ class Authenticate extends AbstractJsonCommand
         if($this->hasKey('tenantid')){
             $data['auth']['tenantId'] = $this->get('tenantid');
         }
+        if($this->hasKey('tenantname')){
+            $data['auth']['tenantName'] = $this->get('tenantname');
+        }
         $body = json_encode($data);
         $this->request = $this->client->post('tokens', null, $body);        
     }
