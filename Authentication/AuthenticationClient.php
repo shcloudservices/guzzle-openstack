@@ -89,6 +89,7 @@ class AuthenticationClient extends Client
         $this->initToken($result);
        /*Corregir acceso, y creo que esto es necesario capturarlo sólo la primera
         vez*/
+        //echo $result['access']['serviceCatalog'][0]['endpoints'][0]['publicURL'];
         return array("identityEndpoint" => $result['access']['serviceCatalog']['endpoints'],
             "computeEndpoint" => $result['access']['serviceCatalog']['endpoints']);
     }
