@@ -1,6 +1,8 @@
 <?php
 
-namespace Guzzle\Openstack;
+namespace Guzzle\Openstack\Openstack;
+
+use \Guzzle\Service\Inspector;
 
 /**
  * @license See the LICENSE file that was distributed with this source code.
@@ -11,6 +13,7 @@ namespace Guzzle\Openstack;
  */
 class OpenstackClient extends \Guzzle\Service\Client{
     
+     protected $username, $password, $tenantName, $token;
      protected $computeClient, $identityClient, $serviceCatalog;
      
     /**
@@ -27,10 +30,10 @@ class OpenstackClient extends \Guzzle\Service\Client{
     public static function factory($config)
     {       
         $default = array();
-        $required = array('auth_url', 'username', 'password');
+        $required = array('auth_url');
         $config = Inspector::prepareConfig($config, $default, $required);
 
-        $client = new self($config->get('base_url'), $config->get('username'), $config->get('password'), $config->get('auth_url'));
+        $client = new self($config->get('auth_url'));
         $client->setConfig($config);
 
         return $client;
@@ -40,35 +43,51 @@ class OpenstackClient extends \Guzzle\Service\Client{
      * OpenstackClient constructor
      * 
      * @param string $auth_url URL of the Identity Service
-     * @param string $username Username
-     * @param string $password Password
-     * @param string $tenantName Tenant Name
      */
-    public function __construct($auth_url, $username, $password, $tenantName=null)
+    public function __construct($auth_url)
     {
-        parent::__construct($baseUrl);
-        $authResp = $client->authentication($username, $password, $tenantName);
-        $identityEndpoint = $authResp["identityEndpoint"];
-        $computeEndpoint = $authResp["computeEndpoint"];
-
-        return $client;
+        parent::__construct($auth_url);
     }
     
     
     /**
-     * Get a IdentityClient
-     *
-     * @return IdentityClient
+     * Authentication method
+     * 
+     * @param string $username Username
+     * @param string $password Password
+     * @param string $tenantName Tenant Name
      */
-    public function getIdentityClient() {
-        if ($this->identityClient != null) {
-            return $this->identityClient;
+    public function authenticate($username, $password, $tenantName)
+    {
+        try {
+            $command = $this->getCommand('Authenticate', array('username'=>$username, 
+                'password'=>$password, 'tenantName'=>$tenantName));
+            $authResult = $command->execute()->getResult();
+        } catch(BadResponseException $e){
+            throw new OpenstackException($e);
         }
         
+        $this->username = $username;
+        $this->password = $password;
+        $this->tenantName = $tenantName;
+        
+        //Copy Service Catalog
+        $this->serviceCatalog = $authResult['access']['serviceCatalog'];
+        
+        //Get token
+        $this->token = $authResult['access']['token'];
         
     }
-
-        
+    
+    public function getServiceCatalog()
+    {
+        return $this->serviceCatalog;
+    }
+    
+    public function getToken()
+    {
+        return $this->token;
+    }
 }
 
 ?>

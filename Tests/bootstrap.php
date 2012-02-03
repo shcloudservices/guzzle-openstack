@@ -38,6 +38,7 @@ Guzzle\Tests\GuzzleTestCase::setServiceBuilder(\Guzzle\Service\ServiceBuilder::f
         'params' => array(
             'username' => 'admin',
             'password' => 'openstack',
+            'auth_url' => 'http://mykeystoneserver:5000/v2.0/',
             'ip' => '192.168.4.100'
         )
     ),
@@ -54,5 +55,9 @@ Guzzle\Tests\GuzzleTestCase::setServiceBuilder(\Guzzle\Service\ServiceBuilder::f
     'test.compute' => array(
         'extends' => 'test.abstract.os',
         'class' => 'Guzzle.Openstack.Compute.ComputeClient'
+    ),
+    'test.openstack'=> array(
+        'extends' => 'test.abstract.os',
+        'class' => 'Guzzle.Openstack.Openstack.OpenstackClient'
     )
 )));
