@@ -5,18 +5,49 @@
 
 namespace Guzzle\Openstack\Identity\Command;
 
-use Guzzle\Openstack\Common\Command\Paginator;
+use Guzzle\Openstack\Common\AbstractJsonCommand;
 
 /**
  * List users
  *
- * @inheritdoc
+ * @guzzle marker doc="Marker for pagination"
+ * @guzzle limit doc="Limit for pagination"
  */
-class ListUsers extends Paginator
+class ListUsers extends AbstractJsonCommand
 {
+    /**
+     * Set the marker for pagination
+     *
+     * @param string $marker
+     *
+     * @return ListUsers
+     */
+    public function setMarker($marker)
+    {
+        return $this->set('marker', $marker);
+    }
+
+    /**
+     * Set the limit for pagination
+     *
+     * @param integer $limit
+     *
+     * @return ListUsers
+     */
+    public function setLimit($limit)
+    {
+        return $this->set('limit', $limit);
+    }
+
     protected function build()
     {
-        parent::build();
+        if($this->hasKey('marker')){
+            $this->request->getQuery()->set('marker', $this->get('marker'));
+        }
+
+        if($this->hasKey('limit')){
+            $this->request->getQuery()->set('limit', $this->get('limit'));
+        }
         
         $this->request = $this->client->get('users', array("X-Auth-Token" => $this->client->getIdentity()->getToken($this->client->getUsername(), $this->client->getPassword())));
     }

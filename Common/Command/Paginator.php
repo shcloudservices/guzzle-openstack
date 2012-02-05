@@ -39,12 +39,14 @@ class Paginator extends AbstractJsonCommand{
     
     protected function build()
     {
+        echo "REQUEST " . $this->request;
         if($this->hasKey('marker')){
             echo "MARKER" . $this->get('marker');
             $this->request->getQuery()->set('marker', $this->get('marker'));
         }
 
         if($this->hasKey('limit')){
+            echo "LIMIT" . $this->get('limit');
             $this->request->getQuery()->set('limit', $this->get('limit'));
         }
     }
