@@ -41,14 +41,15 @@ class ListTenants extends AbstractJsonCommand
 
     protected function build()
     {
+        $this->request = $this->client->get('tenants', array("X-Auth-Token" => $this->client->getIdentity()->getToken($this->client->getUsername(), $this->client->getPassword())));        
+        
         if($this->hasKey('marker')){
             $this->request->getQuery()->set('marker', $this->get('marker'));
         }
 
         if($this->hasKey('limit')){
             $this->request->getQuery()->set('limit', $this->get('limit'));
-        }
-        
-        $this->request = $this->client->get('tenants', array("X-Auth-Token" => $this->client->getIdentity()->getToken($this->client->getUsername(), $this->client->getPassword())));
+        }        
+
     }
 }

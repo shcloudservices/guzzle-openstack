@@ -41,6 +41,8 @@ class ListUsers extends AbstractJsonCommand
 
     protected function build()
     {
+        $this->request = $this->client->get('users', array("X-Auth-Token" => $this->client->getIdentity()->getToken($this->client->getUsername(), $this->client->getPassword())));        
+        
         if($this->hasKey('marker')){
             $this->request->getQuery()->set('marker', $this->get('marker'));
         }
@@ -49,6 +51,5 @@ class ListUsers extends AbstractJsonCommand
             $this->request->getQuery()->set('limit', $this->get('limit'));
         }
         
-        $this->request = $this->client->get('users', array("X-Auth-Token" => $this->client->getIdentity()->getToken($this->client->getUsername(), $this->client->getPassword())));
     }
 }

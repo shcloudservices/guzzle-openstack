@@ -14,11 +14,11 @@ use Guzzle\Openstack\Common\AbstractJsonCommand;
  */
 class ListEndpoints extends AbstractJsonCommand {
     /**
-     * Set the marker for pagination
+     * Set the tokenId
      *
-     * @param string $marker
+     * @param string $tokenId
      *
-     * @return ListTenants
+     * @return ListEndpoints
      */
     public function setTokenId($tokenId)
     {
