@@ -1,0 +1,6 @@
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json; charset=UTF-8
+Content-Length: 80
+Date: Sat, 07 Jan 2012 02:34:49 GMT
+
+{"unauthorized": {"message": "Bad token, please reauthenticate", "code": "401"}}

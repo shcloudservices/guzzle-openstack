@@ -5,11 +5,11 @@
 
 namespace Guzzle\Openstack\Identity;
 
-use Guzzle\Common\Inspector;
+use Guzzle\Service\Inspector;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Service\Client;
 use Guzzle\Service\Description\XmlDescriptionBuilder;
-use Guzzle\Openstack\Common\IdentityAuthObserver;
+use Guzzle\Openstack\Common\AuthenticationObserver;
 use Guzzle\Openstack\Common\AbstractClient;
 
 class IdentityClient extends AbstractClient
@@ -21,7 +21,8 @@ class IdentityClient extends AbstractClient
      * @param array|Collection $config Configuration data. Array keys:
      *    username - API username
      *    password - API password
-     *    identity - IdentityAuthClient for authentication
+     *    identity - AuthenticationClient for authentication
+     *    tenantid - Tenant Id
      *
      * @return IdentityClient
      */
@@ -30,25 +31,27 @@ class IdentityClient extends AbstractClient
         $default = array();
         $required = array('identity', 'username', 'password');
         $config = Inspector::prepareConfig($config, $default, $required);        
-        $client = new self($config->get('identity'),$config->get('username'),$config->get('password'));
+        $client = new self($config->get('identity'),$config->get('username'),$config->get('password'),$config->get('tenantid'));
         $client->setConfig($config);
-        $client->getEventManager()->attach(new IdentityAuthObserver(), 0);
+        $client->getEventDispatcher()->addSubscriber(new AuthenticationObserver());
         return $client;
     }
 
     /**
      * IdentityClient constructor
      *
-     * @param IdentityAuthClient $identity IdentityAuthClient for authentication
+     * @param AuthenticationClient $identity AuthenticationClient for authentication
      * @param string $username Username
      * @param string $password Password
+     * @param string $tenant Tenant ID (for scoped access)
      */
-    public function __construct($identity, $username, $password)
+    public function __construct($identity, $username, $password, $tenantid='')
     {
         parent::__construct($identity->getBaseurl());
         $this->identity = $identity;
         $this->username = $username;
         $this->password = $password;
+        $this->tenantid = $tenantid;
     }
     
 }

@@ -5,11 +5,11 @@
 
 namespace Guzzle\Openstack\Compute;
 
-use Guzzle\Common\Inspector;
+use Guzzle\Service\Inspector;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Openstack\Common\AbstractClient;
 use Guzzle\Service\Description\XmlDescriptionBuilder;
-use Guzzle\Openstack\Common\IdentityAuthObserver;
+use Guzzle\Openstack\Common\AuthenticationObserver;
 
 class ComputeClient extends AbstractClient
 {
@@ -28,15 +28,15 @@ class ComputeClient extends AbstractClient
     {
         $default  = array(
             'base_url' => '{{scheme}}://{{ip}}:{{port}}/v{{version}}/wtf/',
-            'scheme' => 'https',
-            'version' => '2',
+            'scheme' => 'http',
+            'version' => '1.1',
             'port' => '8774'
         );
         $required = array('base_url','ip','identity','username','password');
         $config = Inspector::prepareConfig($config, $default, $required);
         $client = new self($config->get('base_url'), $config->get('identity'),$config->get('username'),$config->get('password'));
         $client->setConfig($config);
-        $client->getEventManager()->attach(new IdentityAuthObserver(), 0);
+        $client->getEventDispatcher()->addSubscriber(new AuthenticationObserver());
         
         return $client;
     }
@@ -45,7 +45,7 @@ class ComputeClient extends AbstractClient
      * Client constructor
      *
      * @param string $baseUrl Base URL of the web service
-     * @param IdentityAuthClient $identity IdentityAuthClient for authentication
+     * @param AuthenticationClient $identity AuthenticationClient for authentication
      * @param string $username Username
      * @param string $password Password
      * 

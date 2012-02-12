@@ -8,19 +8,19 @@ namespace Guzzle\Openstack\Identity\Command;
 use Guzzle\Openstack\Common\AbstractJsonCommand;
 
 /**
- * List tenants
+ * List users
  *
  * @guzzle marker doc="Marker for pagination"
  * @guzzle limit doc="Limit for pagination"
  */
-class ListTenants extends AbstractJsonCommand
+class ListUsers extends AbstractJsonCommand
 {
     /**
      * Set the marker for pagination
      *
      * @param string $marker
      *
-     * @return ListTenants
+     * @return ListUsers
      */
     public function setMarker($marker)
     {
@@ -32,7 +32,7 @@ class ListTenants extends AbstractJsonCommand
      *
      * @param integer $limit
      *
-     * @return ListTenants
+     * @return ListUsers
      */
     public function setLimit($limit)
     {
@@ -41,7 +41,7 @@ class ListTenants extends AbstractJsonCommand
 
     protected function build()
     {
-        $this->request = $this->client->get('tenants', array("X-Auth-Token" => $this->client->getIdentity()->getToken($this->client->getUsername(), $this->client->getPassword())));        
+        $this->request = $this->client->get('users', array("X-Auth-Token" => $this->client->getIdentity()->getToken($this->client->getUsername(), $this->client->getPassword())));        
         
         if($this->hasKey('marker')){
             $this->request->getQuery()->set('marker', $this->get('marker'));
@@ -49,7 +49,7 @@ class ListTenants extends AbstractJsonCommand
 
         if($this->hasKey('limit')){
             $this->request->getQuery()->set('limit', $this->get('limit'));
-        }        
-
+        }
+        
     }
 }

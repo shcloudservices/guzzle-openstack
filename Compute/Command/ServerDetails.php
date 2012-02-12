@@ -10,13 +10,13 @@ use Guzzle\Openstack\Common\AbstractJsonCommand;
 /**
  * Returns servers detail
  * 
- * @guzzle image doc="Image ID or full URL" required="false"
- * @guzzle flavor doc="Flavor ID or full URL" required="false"
- * @guzzle name doc="Server name" required="false"
- * @guzzle status doc="Server status" required="false"
- * @guzzle marker doc="ID of last item in previous list for pagination" required="false"
- * @guzzle limit doc="Page size for pagination" required="false"
- * @guzzle changes_since doc="Check for changes since datetime in ISO 8601 format" required="false"
+ * @guzzle image doc="Image ID or full URL"
+ * @guzzle flavor doc="Flavor ID or full URL"
+ * @guzzle name doc="Server name"
+ * @guzzle status doc="Server status"
+ * @guzzle marker doc="ID of last item in previous list for pagination"
+ * @guzzle limit doc="Page size for pagination"
+ * @guzzle changes_since doc="Check for changes since datetime in ISO 8601 format"
  *  
  */
 class ServerDetails extends AbstractJsonCommand

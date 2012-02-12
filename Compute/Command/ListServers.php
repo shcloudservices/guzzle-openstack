@@ -9,6 +9,8 @@ use Guzzle\Openstack\Common\AbstractJsonCommand;
 
 /**
  * Returns a list of available servers
+ * @guzzle image doc="Image Reference"
+ * @guzzle limit doc="Limit for pagination"
  */
 class ListServers extends AbstractJsonCommand
 {

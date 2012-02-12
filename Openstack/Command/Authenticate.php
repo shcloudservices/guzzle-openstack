@@ -3,16 +3,16 @@
  * @license See the LICENSE file that was distributed with this source code.
  */
 
-namespace Guzzle\Openstack\IdentityAuth\Command;
+namespace Guzzle\Openstack\Openstack\Command;
 
 use Guzzle\Openstack\Common\AbstractJsonCommand;
 
 /**
- * Requests a new token for username
+ * Requests authentication info for username
  *
  * @guzzle username doc="Username" required="true"
  * @guzzle password doc="Password" required="true"
- * @guzzle tenantid doc="Tenant Id"
+ * @guzzle tenantName doc="Tenant Name"
  */
 class Authenticate extends AbstractJsonCommand
 {
@@ -41,15 +41,15 @@ class Authenticate extends AbstractJsonCommand
     }
 
     /**
-     * Set the tenant_id
+     * Set the tenantName
      *
-     * @param string $tenantId
+     * @param string $tenantName
      *
      * @return Authenticate
      */
-    public function setTenantid($tenantId)
+    public function setTenantName($tenantName)
     {
-        return $this->set('tenantid', $tenantId);
+        return $this->set('tenantName', $tenantName);
     }    
     
     protected function build()
@@ -62,8 +62,8 @@ class Authenticate extends AbstractJsonCommand
                 )
             )
         );
-        if($this->hasKey('tenantid')){
-            $data['auth']['tenantId'] = $this->get('tenantid');
+        if($this->hasKey('tenantName')){
+            $data['auth']['tenantName'] = $this->get('tenantName');
         }
         $body = json_encode($data);
         $this->request = $this->client->post('tokens', null, $body);        

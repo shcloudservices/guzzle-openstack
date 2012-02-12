@@ -9,12 +9,10 @@ use Guzzle\Service\Client;
 
 /**
  * Openstack AbstractClient
- *
- * @author Adrian Moya
  */
 class AbstractClient extends Client
 {
-    protected $username, $password, $identity, $lastCommand;
+    protected $username, $password, $identity, $tenantid;
     
     public function getUsername() {
         return $this->username;
@@ -24,26 +22,14 @@ class AbstractClient extends Client
         return $this->password;
     }
     
+    public function getTenantId() {
+        return $this->tenantid;
+    }
+    
     public function getIdentity() {
         return $this->identity;
     }
-    
-    /**
-     * Set last command
-     * @param type $command 
-     */
-    public function setLastCommand($command) {
-        $this->lastCommand = $command;
-    }
-    
-    /**
-     * Get last command
-     * @return type 
-     */
-    public function getLastCommand() {
-        return $this->lastCommand; 
-    }
-    
+       
 }
 
 ?>
