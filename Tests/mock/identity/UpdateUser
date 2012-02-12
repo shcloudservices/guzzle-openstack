@@ -1,0 +1,6 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=UTF-8
+Content-Length: 220
+Date: Sat, 07 Jan 2012 03:05:57 GMT
+
+{"user": {"email": "newemail@email.com", "password": "$6$rounds=40000$WX/dmF4CBerO1jS/$oskDPnFB9mLID/6HHuFDVxmq76OT3Vb6QjrwEur/25//Du5fAClM9MZfHwXdtu07tn5Cv7LKyEVkxQaagjyTR0", "enabled": false, "id": "6", "name": "modified"}}

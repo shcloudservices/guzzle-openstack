@@ -1,0 +1,7 @@
+HTTP/1.1 200 OK
+Vary: X-Auth-Token
+Content-Type: application/json; charset=UTF-8
+Content-Length: 40
+Date: Sun, 29 Jan 2012 21:07:43 GMT
+
+{"endpoints_links": [], "endpoints": []}

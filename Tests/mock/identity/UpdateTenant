@@ -1,0 +1,6 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=UTF-8
+Content-Length: 85
+Date: Sat, 07 Jan 2012 05:20:27 GMT
+
+{"tenant": {"enabled": true, "description": "new desc", "name": "demo", "id": "2"}}

@@ -1,0 +1,6 @@
+HTTP/1.1 201 Created
+Content-Type: application/json; charset=UTF-8
+Content-Length: 116
+Date: Sat, 07 Jan 2012 01:41:07 GMT
+
+{"user": {"email": "myemail@email.com", "password": "mypassword", "enabled": true, "id": "4", "name": "myusername"}}

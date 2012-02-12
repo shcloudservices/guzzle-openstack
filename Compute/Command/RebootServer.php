@@ -5,7 +5,7 @@
 
 namespace Guzzle\Openstack\Compute\Command;
 
-use Guzzle\Openstack\Commons\AbstractJsonCommand;
+use Guzzle\Openstack\Common\AbstractJsonCommand;
 
 /**
  * Sends a servers API request get
