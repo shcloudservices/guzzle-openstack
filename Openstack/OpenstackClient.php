@@ -6,6 +6,7 @@ use \Guzzle\Service\Inspector;
 use Guzzle\Openstack\Identity\IdentityClient;
 use Guzzle\Openstack\Compute\ComputeClient;
 use Guzzle\Openstack\Common\OpenstackException;
+
 /**
  * @license See the LICENSE file that was distributed with this source code.
  */
@@ -39,7 +40,7 @@ class OpenstackClient extends \Guzzle\Service\Client {
         $required = array('auth_url');
         $config = Inspector::prepareConfig($config, $default, $required);
 
-        $client = new self($config->get('auth_url'),$config->get('username'),$config->get('password'),$config->get('tenantName'));
+        $client = new self($config->get('auth_url'), $config->get('username'), $config->get('password'), $config->get('tenantName'));
         $client->setConfig($config);
 
         return $client;
@@ -50,13 +51,16 @@ class OpenstackClient extends \Guzzle\Service\Client {
      * 
      * @param string $auth_url URL of the Identity Service
      */
-    public function __construct($auth_url, $username, $password, $tenantName) {
+    public function __construct($auth_url, $username, $password, $tenantName='') {
         parent::__construct($auth_url);
         $this->auth_url = $auth_url;
         $this->serviceCatalog = array();
-        if(!is_null($username)&&!is_null($password)){
+        $this->identityClient = IdentityClient::factory(array(
+                    'base_url' => $this->auth_url
+                ));
+        if (!is_null($username) && !is_null($password)) {
             $this->authenticate($username, $password, $tenantName);
-        }        
+        }
     }
 
     /**
@@ -67,33 +71,29 @@ class OpenstackClient extends \Guzzle\Service\Client {
      * @param string $tenantName Tenant Name
      */
     public function authenticate($username, $password, $tenantName) {
-        $this->identityClient = IdentityClient::factory(array(
-                        'username' => $this->username,
-                        'password' => $this->password,
-                        'tenantName' => $this->tenantName,
-                        'base_url' => $this->auth_url
-            ));
-        
-        $this->username = $username;
-        $this->password = $password;
-        $this->tenantName = $tenantName;
+        $command = $this->identityClient->getCommand('Authenticate');
+        $command->setUsername($username)->setPassword($password)->setTenantname($tenantName);
+        try {
+            $authResult = $command->execute()->getResult;
+            $this->username = $username;
+            $this->password = $password;
+            $this->tenantName = $tenantName;
 
-        //Copy Service Catalog
-        $this->serviceCatalog = $authResult['access']['serviceCatalog'];
+            //Copy Service Catalog
+            $this->serviceCatalog = $authResult['access']['serviceCatalog'];
 
-        //Get token
-        $this->token = $authResult['access']['token'];
-        
-        //Default Region
-        $this->region = 'RegionOne';
+            //Get token
+            $this->token = $authResult['access']['token'];
+
+            //Default Region
+            $this->region = 'RegionOne';
+        } catch (OpenstackException $e) {
+            
+        }
     }
 
     public function getServiceCatalog() {
         return $this->serviceCatalog;
-    }
-
-    public function getToken() {
-        return $this->token;
     }
 
     /**
@@ -103,8 +103,8 @@ class OpenstackClient extends \Guzzle\Service\Client {
      * @return array 
      */
     public function getEndpoints($serviceType) {
-        if(is_null($this->token))
-                throw new OpenstackException('Unauthenticated');
+        if (is_null($this->token))
+            throw new OpenstackException('Unauthenticated');
         $serviceEndpoints = array();
         foreach ($this->serviceCatalog as $value) {
             if ($value['type'] == $serviceType) {
@@ -141,6 +141,23 @@ class OpenstackClient extends \Guzzle\Service\Client {
                     ));
         }
         return $this->identityClient;
+    }
+
+    /**
+     * Returns an authentication token for the specified username / tenant
+     * @param string $username 
+     * @param string $password
+     * @param string $tenantid
+     * @param string $forceRefresh
+     * @return string 
+     */
+    public function getToken($username, $password, $tenantName='', $forceRefresh = false) {
+//        $key = $this->createKey($username, $password, $tenantName);
+//        if($forceRefresh || !array_key_exists($key, $this->tokenCache)) {
+//            $result =  $this->executeAuthCommand($username, $password, $tenantName);
+//            $this->tokenCache[$key] = $result['access']['token']['id'];
+//        }        
+//        return $this->tokenCache[$key];
     }
 
 }
