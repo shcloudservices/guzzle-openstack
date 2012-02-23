@@ -5,15 +5,12 @@ namespace Guzzle\Openstack\Tests\Identity\Command;
 /**
  * Check Token command unit test
  */
-class CheckTokenTest extends \Guzzle\Tests\GuzzleTestCase
+class CheckTokenTest extends \Guzzle\Openstack\Tests\Identity\Common\IdentityTestCase
 {
 
     public function testCheckToken()
     {
-        $authclient = \Guzzle\Openstack\Authentication\AuthenticationClient::factory(array('username' => 'username', 'password' => 'password', 'ip' => '192.168.4.100', 'port' => '35357'));
-        $client = \Guzzle\Openstack\Identity\IdentityClient::factory(array('identity' => $authclient, 'username'=>'username', 'password'=>'password'));
-        $this->setMockResponse($client->getIdentity(), array('authentication/AuthenticateAuthorized'));  
-        $command = $client->getCommand('CheckToken');
+        $command = $this->client->getCommand('CheckToken');
         $command->setToken('token');
         $command->prepare();
       

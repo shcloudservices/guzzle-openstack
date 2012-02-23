@@ -41,10 +41,11 @@ class CheckToken extends AbstractJsonCommand
  
     protected function build()
     {
+        $this->request = $this->client->head('tokens/'.$this->get('token'));        
+        
         if($this->hasKey('belongsTo')){
             $this->request->getQuery()->set('belongsTo', $this->get('belongsTo'));
         }        
         
-        $this->request = $this->client->head('tokens/'.$this->get('token'));        
     }
 }

@@ -17,9 +17,10 @@ class ListUsers extends Paginator
 {
     protected function build()
     {
-        $this->request = $this->client->get('users', array("X-Auth-Token" => $this->client->getIdentity()->getToken($this->client->getUsername(), $this->client->getPassword())));
+        $this->request = $this->client->get('users');
         
         parent::build();
            
+
     }
 }

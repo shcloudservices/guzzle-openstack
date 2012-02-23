@@ -5,6 +5,7 @@ namespace Guzzle\Openstack\Openstack;
 use \Guzzle\Service\Inspector;
 use Guzzle\Openstack\Identity\IdentityClient;
 use Guzzle\Openstack\Compute\ComputeClient;
+use Guzzle\Openstack\Common\OpenstackException;
 
 /**
  * @license See the LICENSE file that was distributed with this source code.
@@ -15,7 +16,7 @@ use Guzzle\Openstack\Compute\ComputeClient;
  */
 class OpenstackClient extends \Guzzle\Service\Client {
 
-    protected $username, $password, $tenantName, $region, $token;
+    protected $auth_url, $username, $password, $tenantName, $region, $token;
     protected $computeClient, $identityClient, $serviceCatalog;
 
     /**
@@ -39,7 +40,7 @@ class OpenstackClient extends \Guzzle\Service\Client {
         $required = array('auth_url');
         $config = Inspector::prepareConfig($config, $default, $required);
 
-        $client = new self($config->get('auth_url'));
+        $client = new self($config->get('auth_url'), $config->get('username'), $config->get('password'), $config->get('tenantName'));
         $client->setConfig($config);
 
         return $client;
@@ -50,8 +51,16 @@ class OpenstackClient extends \Guzzle\Service\Client {
      * 
      * @param string $auth_url URL of the Identity Service
      */
-    public function __construct($auth_url) {
+    public function __construct($auth_url, $username, $password, $tenantName='') {
         parent::__construct($auth_url);
+        $this->auth_url = $auth_url;
+        $this->serviceCatalog = array();
+        $this->identityClient = IdentityClient::factory(array(
+                    'base_url' => $this->auth_url
+                ));
+        if (!is_null($username) && !is_null($password)) {
+            $this->authenticate($username, $password, $tenantName);
+        }
     }
 
     /**
@@ -62,34 +71,29 @@ class OpenstackClient extends \Guzzle\Service\Client {
      * @param string $tenantName Tenant Name
      */
     public function authenticate($username, $password, $tenantName) {
+        $command = $this->identityClient->getCommand('Authenticate');
+        $command->setUsername($username)->setPassword($password)->setTenantname($tenantName);
         try {
-            $command = $this->getCommand('Authenticate', array('username' => $username,
-                'password' => $password, 'tenantName' => $tenantName));
-            $authResult = $command->execute()->getResult();
-        } catch (BadResponseException $e) {
-            throw new OpenstackException($e);
+            $authResult = $command->execute()->getResult;
+            $this->username = $username;
+            $this->password = $password;
+            $this->tenantName = $tenantName;
+
+            //Copy Service Catalog
+            $this->serviceCatalog = $authResult['access']['serviceCatalog'];
+
+            //Get token
+            $this->token = $authResult['access']['token'];
+
+            //Default Region
+            $this->region = 'RegionOne';
+        } catch (OpenstackException $e) {
+            
         }
-
-        $this->username = $username;
-        $this->password = $password;
-        $this->tenantName = $tenantName;
-
-        //Copy Service Catalog
-        $this->serviceCatalog = $authResult['access']['serviceCatalog'];
-
-        //Get token
-        $this->token = $authResult['access']['token'];
-        
-        //Default Region
-        $this->region = 'RegionOne';
     }
 
     public function getServiceCatalog() {
         return $this->serviceCatalog;
-    }
-
-    public function getToken() {
-        return $this->token;
     }
 
     /**
@@ -98,7 +102,9 @@ class OpenstackClient extends \Guzzle\Service\Client {
      * @param string $serviceType
      * @return array 
      */
-    private function getEndpoints($serviceType) {
+    public function getEndpoints($serviceType) {
+        if (is_null($this->token))
+            throw new OpenstackException('Unauthenticated');
         $serviceEndpoints = array();
         foreach ($this->serviceCatalog as $value) {
             if ($value['type'] == $serviceType) {
@@ -116,7 +122,7 @@ class OpenstackClient extends \Guzzle\Service\Client {
      * @param string $endpointType
      * @return string
      */
-    private function getEndpoint($serviceType, $region, $endpointType='public') {
+    public function getEndpoint($serviceType, $region, $endpointType='public') {
         $serviceEndpoints = $this->getEndpoints($serviceType);
         foreach ($serviceEndpoints as $endpointsRegion => $endpoints) {
             if ($endpointsRegion == $region) {
@@ -135,6 +141,23 @@ class OpenstackClient extends \Guzzle\Service\Client {
                     ));
         }
         return $this->identityClient;
+    }
+
+    /**
+     * Returns an authentication token for the specified username / tenant
+     * @param string $username 
+     * @param string $password
+     * @param string $tenantid
+     * @param string $forceRefresh
+     * @return string 
+     */
+    public function getToken($username, $password, $tenantName='', $forceRefresh = false) {
+//        $key = $this->createKey($username, $password, $tenantName);
+//        if($forceRefresh || !array_key_exists($key, $this->tokenCache)) {
+//            $result =  $this->executeAuthCommand($username, $password, $tenantName);
+//            $this->tokenCache[$key] = $result['access']['token']['id'];
+//        }        
+//        return $this->tokenCache[$key];
     }
 
 }

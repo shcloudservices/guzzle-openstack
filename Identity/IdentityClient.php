@@ -19,19 +19,16 @@ class IdentityClient extends AbstractClient
      * Factory method to create a new IdentityClient
      *
      * @param array|Collection $config Configuration data. Array keys:
-     *    username - API username
-     *    password - API password
-     *    identity - AuthenticationClient for authentication
-     *    tenantid - Tenant Id
+     *    base_url - Identity base url
      *
      * @return IdentityClient
      */
     public static function factory($config)
     {
         $default = array();
-        $required = array('identity', 'username', 'password');
+        $required = array('base_url');
         $config = Inspector::prepareConfig($config, $default, $required);        
-        $client = new self($config->get('identity'),$config->get('username'),$config->get('password'),$config->get('tenantid'));
+        $client = new self($config->get('base_url'), $config->get('token'));
         $client->setConfig($config);
         $client->getEventDispatcher()->addSubscriber(new AuthenticationObserver());
         return $client;
@@ -40,18 +37,13 @@ class IdentityClient extends AbstractClient
     /**
      * IdentityClient constructor
      *
-     * @param AuthenticationClient $identity AuthenticationClient for authentication
-     * @param string $username Username
-     * @param string $password Password
-     * @param string $tenant Tenant ID (for scoped access)
+     * @param string $base_url Base Url for keystone
      */
-    public function __construct($identity, $username, $password, $tenantid='')
+    public function __construct($base_url, $token)
     {
-        parent::__construct($identity->getBaseurl());
-        $this->identity = $identity;
-        $this->username = $username;
-        $this->password = $password;
-        $this->tenantid = $tenantid;
+        parent::__construct($base_url);
+        if(!is_null($token))
+            $this->setToken ($token);
     }
     
 }

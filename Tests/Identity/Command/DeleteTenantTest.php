@@ -5,16 +5,13 @@ namespace Guzzle\Openstack\Tests\Identity\Command;
 /**
  * Delete Tenant command unit test
  */
-class DeleteTenantTest extends \Guzzle\Tests\GuzzleTestCase
+class DeleteTenantTest extends \Guzzle\Openstack\Tests\Identity\Common\IdentityTestCase
 {
 
     public function testDeleteTenant()
     {
-        $authclient = \Guzzle\Openstack\Authentication\AuthenticationClient::factory(array('username' => 'username', 'password' => 'password', 'ip' => '192.168.4.100', 'port'=>'35357'));
-        $client = \Guzzle\Openstack\Identity\IdentityClient::factory(array('identity' => $authclient, 'username'=>'username', 'password'=>'password'));
-        $this->setMockResponse($client->getIdentity(), 'authentication/AuthenticateAuthorized');        
-        $this->setMockResponse($client, 'identity/DeleteTenant');        
-        $command = $client->getCommand('DeleteTenant');
+        $this->setMockResponse($this->client, 'identity/DeleteTenant');        
+        $command = $this->client->getCommand('DeleteTenant');
         $command->setId('2');
         $command->prepare();
       
