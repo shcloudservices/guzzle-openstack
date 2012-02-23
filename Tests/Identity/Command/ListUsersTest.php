@@ -25,7 +25,7 @@ class ListUsersTest extends \Guzzle\Tests\GuzzleTestCase
         $command->prepare();
       
         //Check method and resource
-        $this->assertEquals('http://192.168.4.100:5000/v2.0/users', $command->getRequest()->getUrl());
+        $this->assertEquals('http://192.168.4.100:35357/v2.0/users', $command->getRequest()->getUrl());
         $this->assertEquals('GET', $command->getRequest()->getMethod());
                 
         //Check for authentication header
@@ -45,7 +45,7 @@ class ListUsersTest extends \Guzzle\Tests\GuzzleTestCase
         $this->setMockResponse($this->client->getIdentity(), array('authentication/AuthenticateAuthorized'));  
         $this->setMockResponse($this->client, 'identity/ListUsers'); 
         $command->prepare();
-        $this->assertEquals('http://192.168.4.100:5000/v2.0/users/marker=1979', $command->getRequest()->getUrl());
+        $this->assertEquals('http://192.168.4.100:35357/v2.0/users?marker=1979', $command->getRequest()->getUrl());
     }
     
     
