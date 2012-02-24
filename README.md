@@ -14,7 +14,7 @@ This is a work in progress, in it's current state is still unusable.
 
 *StorageClient* - Client for Storage Service (Swift) <- Development hasn't started yet.
 
-*OpenstackClient - One client to rule them all! 
+*OpenstackClient* - One client to rule them all! 
 
 ## Testing
 
