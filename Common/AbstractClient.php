@@ -12,24 +12,15 @@ use Guzzle\Service\Client;
  */
 class AbstractClient extends Client
 {
-    protected $username, $password, $identity, $tenantid;
+    protected $token;
     
-    public function getUsername() {
-        return $this->username;
-    }
-
-    public function getPassword() {
-        return $this->password;
+    public function setToken($token){
+        $this->token = $token;
     }
     
-    public function getTenantId() {
-        return $this->tenantid;
-    }
-    
-    public function getIdentity() {
-        return $this->identity;
-    }
-       
+    public function getToken(){
+        return $this->token;
+    }       
 }
 
 ?>

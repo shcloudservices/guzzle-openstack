@@ -27,7 +27,7 @@ class ListEndpoints extends AbstractJsonCommand {
     
     protected function build()
     {
-        $this->request = $this->client->get('tokens/'.$this->get('tokenId').'/endpoints', array("X-Auth-Token" => $this->client->getIdentity()->getToken($this->client->getUsername(), $this->client->getPassword())));
+        $this->request = $this->client->get('tokens/'.$this->get('tokenId').'/endpoints');
     }
     
 }

@@ -28,24 +28,24 @@ class AuthenticationObserver implements \Symfony\Component\EventDispatcher\Event
     public function onRequestCreate(Event $event)
     {
         $client = $event['client'];
-        $token = $client->getIdentity()->getToken($client->getUsername(), $client->getPassword(), $client->getTenantId());
+        $token = $client->getToken();
         $event['request']->setHeader('X-Auth-Token', $token);
 
-        $event['request']->getEventDispatcher()->addListener('request.error', function(Event $event) {
-            $request = $event['request'];
-            $response = $event['response'];
-            // Automatically retry if not authorized
-            if ($response->getStatusCode() == 401 && !$request->getParams()->get('auth_retry')) {
-                $client = $request->getParams()->get('command')->getClient();
-                $token = $client->getIdentity()->getToken($client->getUsername(), $client->getPassword(), $client->getTenantId(), true);
-                $cloned = clone $request;
-                $cloned->getParams()->set('auth_retry', 1);
-                $cloned->setHeader('X-Auth-Token', $token);
-                $event['request']->setResponse($cloned->send());
-                // Prevent other event listeners from firing
-                $event->stopPropagation();
-            }
-        }, -200);
+//        $event['request']->getEventDispatcher()->addListener('request.error', function(Event $event) {
+//            $request = $event['request'];
+//            $response = $event['response'];
+//            // Automatically retry if not authorized
+//            if ($response->getStatusCode() == 401 && !$request->getParams()->get('auth_retry')) {
+//                $client = $request->getParams()->get('command')->getClient();
+//                $token = $client->getIdentity()->getToken($client->getUsername(), $client->getPassword(), $client->getTenantId(), true);
+//                $cloned = clone $request;
+//                $cloned->getParams()->set('auth_retry', 1);
+//                $cloned->setHeader('X-Auth-Token', $token);
+//                $event['request']->setResponse($cloned->send());
+//                // Prevent other event listeners from firing
+//                $event->stopPropagation();
+//            }
+//        }, -200);
     }
 
     /**
