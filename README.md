@@ -8,13 +8,13 @@ This is a work in progress, in it's current state is still unusable.
 
 ## Brief explanation of the clients
 
-*IdentityAuthClient* - used only to ask for autentication tokens to the Openstack Identity Service (Keystone). Other clients use this client for this task.
-
 *IdentityClient* - Client for Identity Service (Keystone)
 
 *ComputeClient* - Client for Compute Service (Nova)
 
 *StorageClient* - Client for Storage Service (Swift) <- Development hasn't started yet.
+
+*OpenstackClient - One client to rule them all! 
 
 ## Testing
 
