@@ -15,46 +15,39 @@ class ComputeClient extends AbstractClient
 {
     protected $baseUrl;
 
-     /**
+    /**
      * Factory method to create a new ComputeClient
      *
      * @param array|Collection $config Configuration data. Array keys:
      *    base_url - Base URL of web service
-     *    identity - Client Identity
+     *    token - Authentication token
      *
      * @return ComputeClient
      */
     public static function factory($config)
     {
-        $default  = array(
-            'base_url' => '{{scheme}}://{{ip}}:{{port}}/v{{version}}/wtf/',
-            'scheme' => 'http',
-            'version' => '1.1',
-            'port' => '8774'
-        );
-        $required = array('base_url','ip','identity','username','password');
-        $config = Inspector::prepareConfig($config, $default, $required);
-        $client = new self($config->get('base_url'), $config->get('identity'),$config->get('username'),$config->get('password'));
+        $default = array();
+        $required = array('base_url','token');
+        $config = Inspector::prepareConfig($config, $default, $required);        
+        $client = new self($config->get('base_url'), $config->get('token'));
         $client->setConfig($config);
         $client->getEventDispatcher()->addSubscriber(new AuthenticationObserver());
-        
         return $client;
     }
 
     /**
-     * Client constructor
+     * ComputeClient constructor
      *
-     * @param string $baseUrl Base URL of the web service
+     * @param string $baseUrl Base URL for Nova
      * @param AuthenticationClient $identity AuthenticationClient for authentication
-     * @param string $username Username
-     * @param string $password Password
+     * @param string $token Authentication token
      * 
      */
-    public function __construct($baseUrl, $identity, $username, $password)
+    public function __construct($baseUrl, $token)
     {
         parent::__construct($baseUrl);
-        $this->identity = $identity;
-        $this->username = $username;
-        $this->password = $password;
+        $this->setToken($token);
     }
+  
+    
 }

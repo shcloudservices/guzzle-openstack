@@ -5,7 +5,7 @@
 
 namespace Guzzle\Openstack\Openstack\Command;
 
-use Guzzle\Openstack\Common\AbstractJsonCommand;
+use Guzzle\Openstack\Common\Command\AbstractJsonCommand;
 
 /**
  * Requests authentication info for username

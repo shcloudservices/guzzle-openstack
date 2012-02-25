@@ -5,7 +5,7 @@
 
 namespace Guzzle\Openstack\Compute\Command;
 
-use Guzzle\Openstack\Common\AbstractJsonCommand;
+use Guzzle\Openstack\Common\Command\AbstractJsonCommand;
 
 /**
  * Returns a list of available servers

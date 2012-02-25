@@ -5,7 +5,7 @@
 
 namespace Guzzle\Openstack\Identity\Command;
 
-use Guzzle\Openstack\Common\Command\Paginator;
+use Guzzle\Openstack\Common\Command\PaginatedCommand;
 
 /**
  * List users
@@ -13,14 +13,11 @@ use Guzzle\Openstack\Common\Command\Paginator;
  * @guzzle marker doc="Marker for pagination"
  * @guzzle limit doc="Limit for pagination"
  */
-class ListUsers extends Paginator
+class ListUsers extends PaginatedCommand
 {
     protected function build()
     {
-        $this->request = $this->client->get('users');
-        
+        $this->request = $this->client->get('users');        
         parent::build();
-           
-
     }
 }

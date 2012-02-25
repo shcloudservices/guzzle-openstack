@@ -43,7 +43,7 @@ class IdentityClient extends AbstractClient
     {
         parent::__construct($base_url);
         if(!is_null($token))
-            $this->setToken ($token);
+            $this->setToken($token);
     }
     
 }

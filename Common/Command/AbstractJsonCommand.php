@@ -3,15 +3,13 @@
  * @license See the LICENSE file that was distributed with this source code.
  */
 
-namespace Guzzle\Openstack\Common;
+namespace Guzzle\Openstack\Common\Command;
 
 use Guzzle\Service\Command\AbstractCommand;
 use Guzzle\Service\Description\ApiCommand;
 
 /**
- * Abstract Command with process, getResult methods implemented encoding json
- *
- * @author aromero
+ * Abstract Command implementing JSON Calls & returning arrays
  */
 abstract class AbstractJsonCommand extends AbstractCommand
 {

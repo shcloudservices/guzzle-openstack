@@ -5,7 +5,7 @@
  */
 namespace Guzzle\Openstack\Identity\Command;
 
-use Guzzle\Openstack\Common\AbstractJsonCommand;
+use Guzzle\Openstack\Common\Command\AbstractJsonCommand;
 
 /**
  * Command to create a user
