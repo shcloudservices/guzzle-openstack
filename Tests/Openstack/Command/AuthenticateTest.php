@@ -10,15 +10,15 @@ class AuthenticateTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testAuthenticate()
     {
-        $client = $this->getServiceBuilder()->get('test.authentication');
-        $this->setMockResponse($client, 'authentication/AuthenticateAuthorized');        
+        $client = $this->getServiceBuilder()->get('test.identity');
+        $this->setMockResponse($client, 'identity/AuthenticateAuthorized');        
         $command = $client->getCommand('Authenticate');
         $command->setUsername('username');
         $command->setPassword('password');
         $command->prepare();
         
         //Test method and resource
-        $this->assertEquals('http://192.168.4.100:5000/v2.0/tokens', $command->getRequest()->getUrl());        
+        $this->assertEquals('http://192.168.4.100:35357/v2.0/tokens', $command->getRequest()->getUrl());        
         $this->assertEquals('POST', $command->getRequest()->getMethod());        
 
         //Test result
