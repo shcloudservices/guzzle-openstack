@@ -2,6 +2,8 @@
 
 namespace Guzzle\Openstack\Tests\Identity\Command;
 
+use \Guzzle\Openstack\Identity\IdentityConstants;
+
 /**
  * Update Users command unit test
  */
@@ -37,7 +39,7 @@ class UpdateUsersTest extends \Guzzle\Openstack\Tests\Identity\Common\IdentityTe
     
     public function testIdRequired()
     {
-        $command = $this->client->getCommand('UpdateUser', array());
+        $command = $this->client->getCommand(IdentityConstants::UPDATE_USER, array());
         $this->setExpectedException('InvalidArgumentException');
         $command->prepare();
     } 

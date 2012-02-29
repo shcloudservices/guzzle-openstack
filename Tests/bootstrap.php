@@ -38,12 +38,15 @@ Guzzle\Tests\GuzzleTestCase::setServiceBuilder(\Guzzle\Service\ServiceBuilder::f
         'params' => array(
             'username' => 'admin',
             'password' => 'openstack',
-            'base_url' => 'http://192.168.4.100:35357/v2.0/',
+            'token' => 'authenticationtoken'
         )
     ),
     'test.identity' => array(
         'extends' => 'test.abstract.os',
         'class' => 'Guzzle.Openstack.Identity.IdentityClient',
+        'params' => array(
+            'base_url' => 'http://192.168.4.100:35357/v2.0/'
+        )
     ),
     'test.compute' => array(
         'extends' => 'test.abstract.os',

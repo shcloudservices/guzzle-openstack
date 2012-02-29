@@ -16,7 +16,8 @@ class AuthenticationObserver implements \Symfony\Component\EventDispatcher\Event
     {
         return array(
             'client.create_request' => 'onRequestCreate',
-            'command.before_send' => 'onCommandBeforeSend',
+            //'command.before_send' => 'onCommandBeforeSend',
+            'client.command.create' => 'onClientCommandCreate'
         );
     }
 
@@ -29,33 +30,23 @@ class AuthenticationObserver implements \Symfony\Component\EventDispatcher\Event
     {
         $client = $event['client'];
         $token = $client->getToken();
+        
         $event['request']->setHeader('X-Auth-Token', $token);
-
-//        $event['request']->getEventDispatcher()->addListener('request.error', function(Event $event) {
-//            $request = $event['request'];
-//            $response = $event['response'];
-//            // Automatically retry if not authorized
-//            if ($response->getStatusCode() == 401 && !$request->getParams()->get('auth_retry')) {
-//                $client = $request->getParams()->get('command')->getClient();
-//                $token = $client->getIdentity()->getToken($client->getUsername(), $client->getPassword(), $client->getTenantId(), true);
-//                $cloned = clone $request;
-//                $cloned->getParams()->set('auth_retry', 1);
-//                $cloned->setHeader('X-Auth-Token', $token);
-//                $event['request']->setResponse($cloned->send());
-//                // Prevent other event listeners from firing
-//                $event->stopPropagation();
-//            }
-//        }, -200);
     }
 
     /**
-     * Associate the command with the request when it is created
-     *
-     * @param Event $event
+     * Check the client authentication token for all commands except authentication
+     * 
+     * @param Event $event 
      */
-    public function onCommandBeforeSend(Event $event)
+    public function onClientCommandCreate(\Guzzle\Common\Event $event)
     {
         $command = $event['command'];
-        $command->getRequest()->getParams()->set('command', $command);
+        if(get_class($command) != 'Guzzle\Openstack\Identity\Command\Authenticate'){
+            if($event['client']->getToken() == null){
+                throw new OpenstackException('Unauthenticated');
+            }
+        }
     }
+    
 }
