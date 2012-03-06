@@ -73,14 +73,35 @@ class ListImages extends PaginatedCommand
      *
      * @return ListImages
      */
-    public function setChangesSince($type)
+    public function setType($type)
     {
         return $this->set('type', $type);
     }
     
     protected function build()
     {
-        $this->request = $this->client->get($this->client->getTenantId().'images');
+        $this->request = $this->client->get($this->client->getTenantId().'/images');
+
+        if($this->hasKey('server')){
+            $this->request->getQuery()->set('server', $this->get('server'));
+        }
+        
+        if($this->hasKey('name')){
+            $this->request->getQuery()->set('name', $this->get('name'));
+        }
+        
+        if($this->hasKey('status')){
+            $this->request->getQuery()->set('status', $this->get('status'));
+        }
+        
+        if($this->hasKey('changes-since')){
+            $this->request->getQuery()->set('changes-since', $this->get('changes-since'));
+        }
+        
+        if($this->hasKey('type')){
+            $this->request->getQuery()->set('type', $this->get('type'));
+        }
+        
         parent::build();
     }
 }
