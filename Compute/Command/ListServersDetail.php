@@ -19,7 +19,7 @@ use Guzzle\Openstack\Common\Command\PaginatedCommand;
  * @guzzle name doc="Name of the server"
  * @guzzle status doc="Value of the status of the server so that you can filter "
  */
-class ListServersDetails extends PaginatedCommand
+class ListServersDetail extends PaginatedCommand
 {
     /**
      * Set the tenant id
@@ -94,7 +94,7 @@ class ListServersDetails extends PaginatedCommand
     }
     protected function build()
     {
-        $this->request = $this->client->get($this->get('id').'/servers/detail'); 
+        $this->request = $this->client->get($this->client->getTenantId().'/servers/detail'); 
         if($this->hasKey('changes-since')){
             $this->request->getQuery()->set('changes-since', $this->get('changes-since'));
         }

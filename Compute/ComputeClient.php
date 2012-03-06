@@ -13,7 +13,7 @@ use Guzzle\Openstack\Common\AuthenticationObserver;
 
 class ComputeClient extends AbstractClient
 {
-    protected $baseUrl;
+    protected $baseUrl, $tenantId;
 
     /**
      * Factory method to create a new ComputeClient
@@ -21,15 +21,16 @@ class ComputeClient extends AbstractClient
      * @param array|Collection $config Configuration data. Array keys:
      *    base_url - Base URL of web service
      *    token - Authentication token
+     *    tenant_id Tenant id
      *
      * @return ComputeClient
      */
     public static function factory($config)
     {
         $default = array();
-        $required = array('base_url','token');
+        $required = array('base_url','token', 'tenant_id');
         $config = Inspector::prepareConfig($config, $default, $required);        
-        $client = new self($config->get('base_url'), $config->get('token'));
+        $client = new self($config->get('base_url'), $config->get('token'), $config->get('tenant_id'));
         $client->setConfig($config);
         $client->getEventDispatcher()->addSubscriber(new AuthenticationObserver());
         return $client;
@@ -43,11 +44,21 @@ class ComputeClient extends AbstractClient
      * @param string $token Authentication token
      * 
      */
-    public function __construct($baseUrl, $token)
+    public function __construct($baseUrl, $token, $tenantId)
     {
         parent::__construct($baseUrl);
         $this->setToken($token);
+        $this->setTenantId($tenantId);
     }
-  
+    
+    public function setTenantId($tenantId) 
+    {
+        $this->tenantId = $tenantId;
+    }
+
+    public function getTenantId()
+    {
+        return $this->tenantId;
+    }
     
 }
