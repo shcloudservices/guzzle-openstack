@@ -3,15 +3,15 @@
 namespace Guzzle\Openstack\Tests\Compute\Command;
 
 /**
- * List Servers Detail command unit test
+ * List Servers command unit test
  */
-class ListServersDetailTest extends \Guzzle\Openstack\Tests\Compute\Common\ComputeTestCase
+class ListServersTest extends \Guzzle\Openstack\Tests\Compute\Common\ComputeTestCase
 {
    
-    public function testListServersDetails()
+    public function testListServers()
     {
-        $this->setMockResponse($this->client, 'compute/ListServersDetail');
-        $command = $this->client->getCommand('ListServersDetail');
+        $this->setMockResponse($this->client, 'compute/ListServers');
+        $command = $this->client->getCommand(\Guzzle\Openstack\Compute\ComputeConstants::LIST_SERVERS);
         $command->setImage('imageRef');
         $command->setFlavor('flavorRef');
         $command->setName('serverName');
@@ -23,7 +23,7 @@ class ListServersDetailTest extends \Guzzle\Openstack\Tests\Compute\Common\Compu
         $command->prepare();
       
         //Check method and resource
-        $this->assertEquals('http://192.168.4.100:8774/v1.1/tenantid/servers/detail?image=imageRef&flavor=flavorRef&name=serverName&status=serverStatus&changes-since=dateTime&marker=markerID&limit=int', $command->getRequest()->getUrl());
+        $this->assertEquals('http://192.168.4.100:8774/v1.1/tenantid/servers?image=imageRef&flavor=flavorRef&name=serverName&status=serverStatus&changes-since=dateTime&marker=markerID&limit=int', $command->getRequest()->getUrl());
         $this->assertEquals('GET', $command->getRequest()->getMethod());
                 
         //Check for authentication header
@@ -36,6 +36,6 @@ class ListServersDetailTest extends \Guzzle\Openstack\Tests\Compute\Common\Compu
         
         $this->assertTrue(array_key_exists('servers', $result));
         
-    }
+    }   
     
 }

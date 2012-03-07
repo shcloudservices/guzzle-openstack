@@ -1,0 +1,6 @@
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 699
+Date: Wed, 07 Mar 2012 01:28:26 GMT
+
+{"servers": [{"uuid": "a43958c9-51be-4ccf-b309-0abad82018e6", "name": "server1", "links": [{"href": "http://192.168.3.100:8774/v1.1/tenantid/servers/7", "rel": "self"}, {"href": "http://192.168.3.100:8774/tenantid/servers/7", "rel": "bookmark"}], "id": 7}, {"uuid": "68dd4b39-aa98-4fa0-a26d-76800380c72e", "name": "server2", "links": [{"href": "http://192.168.3.100:8774/v1.1/tenantid/servers/5", "rel": "self"}, {"href": "http://192.168.3.100:8774/tenantid/servers/5", "rel": "bookmark"}], "id": 5}, {"uuid": "4139a9ec-418e-48ef-8c3c-e0179b8a32a8", "name": "server3", "links": [{"href": "http://192.168.3.100:8774/v1.1/tenantid/servers/4", "rel": "self"}, {"href": "http://192.168.3.100:8774/tenantid/servers/4", "rel": "bookmark"}], "id": 4}]}
