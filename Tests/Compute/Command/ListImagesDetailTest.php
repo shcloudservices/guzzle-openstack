@@ -6,15 +6,15 @@ use Guzzle\Openstack\Tests\Compute\Common\ComputeTestCase;
 use Guzzle\Openstack\Compute\ComputeConstants;
 
 /**
- * ListImages Tests
+ * ListImagesDetail Tests
  */
-class ListImagesTest extends ComputeTestCase
+class ListImagesDetailTest extends ComputeTestCase
 {
     
-    public function testListImages()
+    public function testListImagesDetail()
     {
-        $this->setMockResponse($this->client, 'compute/ListImages');
-        $command = $this->client->getCommand(ComputeConstants::LIST_IMAGES);
+        $this->setMockResponse($this->client, 'compute/ListImagesDetail');
+        $command = $this->client->getCommand(ComputeConstants::LIST_IMAGES_DETAIL);
         $command->setServer('serverRef');
         $command->setName('imageName');
         $command->setStatus('imageStatus');
@@ -26,7 +26,7 @@ class ListImagesTest extends ComputeTestCase
         $command->prepare();
       
         //Check method and resource
-        $this->assertEquals('http://192.168.4.100:8774/v1.1/tenantid/images?server=serverRef&name=imageName&status=imageStatus&changes-since=dateTime&type=type&marker=markerID&limit=int', $command->getRequest()->getUrl());
+        $this->assertEquals('http://192.168.4.100:8774/v1.1/tenantid/images/detail?server=serverRef&name=imageName&status=imageStatus&changes-since=dateTime&type=type&marker=markerID&limit=int', $command->getRequest()->getUrl());
         $this->assertEquals('GET', $command->getRequest()->getMethod());
                 
         //Check for authentication header
