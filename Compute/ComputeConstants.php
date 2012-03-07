@@ -10,10 +10,9 @@ namespace Guzzle\Openstack\Compute;
  */
 class ComputeConstants
 {
-    const LIST_IMAGES = 'ListImages';
-    const LIST_SERVERS = 'ListServers';
-    const LIST_SERVERS_DETAIL = 'ListServersDetail';
-    
+    const LIST_SERVERS = "ListServers";
+    const LIST_SERVERS_DETAIL = "ServerDetails";
+    const LIST_IMAGES = "ListImages";    
 }
 
 ?>

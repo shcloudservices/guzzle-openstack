@@ -15,6 +15,8 @@ use Guzzle\Openstack\Common\Command\PaginatedCommand;
  * @guzzle status doc="Status filter"
  * @guzzle changessince doc="Changes since filter"
  * @guzzle type doc="Type filter"
+ * @guzzle marker doc="Marker for pagination"
+ * @guzzle limit doc="Limit for pagination" 
  */
 class ListImages extends PaginatedCommand
 {
@@ -26,7 +28,7 @@ class ListImages extends PaginatedCommand
      *
      * @return ListImages
      */
-    public function setFlavor($serverRef)
+    public function setServer($serverRef)
     {
         return $this->set('server', $serverRef);
     }

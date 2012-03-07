@@ -16,9 +16,6 @@ class ListServers extends AbstractJsonCommand
 {
     protected function build()
     {
-        $this->request = $this->client->get('servers');
-        
-        
-        
+        $this->request = $this->client->get('servers');        
     }
 }

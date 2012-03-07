@@ -10,28 +10,16 @@ use Guzzle\Openstack\Common\Command\PaginatedCommand;
 /**
  * List servers details
  * 
- * @guzzle id doc="Id of the tenant"
- * @guzzle marker doc="Marker for pagination"
- * @guzzle limit doc="Limit for pagination"
- * @guzzle changes-since doc="Time/date stamp for when the server last changed status"
  * @guzzle image doc="Name of the image in URL format"
  * @guzzle flavor doc="Name of the flavor in URL format"
  * @guzzle name doc="Name of the server"
  * @guzzle status doc="Value of the status of the server so that you can filter "
+ * @guzzle changes-since doc="Time/date stamp for when the server last changed status"
+ * @guzzle marker doc="Marker for pagination"
+ * @guzzle limit doc="Limit for pagination" 
  */
 class ListServersDetail extends PaginatedCommand
 {
-    /**
-     * Set the tenant id
-     *
-     * @param string $id
-     *
-     * @return ListServersDetails
-     */
-    public function setId($id)
-    {
-        return $this->set('id', $id);
-    }
     
     /**
      * Set time/date stamp for when the server last changed status
@@ -92,24 +80,30 @@ class ListServersDetail extends PaginatedCommand
     {
         return $this->set('status', $status);
     }
+    
     protected function build()
     {
         $this->request = $this->client->get($this->client->getTenantId().'/servers/detail'); 
-        if($this->hasKey('changes-since')){
-            $this->request->getQuery()->set('changes-since', $this->get('changes-since'));
-        }
+        
         if($this->hasKey('image')){
             $this->request->getQuery()->set('image', $this->get('image'));
         }
+        
         if($this->hasKey('flavor')){
             $this->request->getQuery()->set('flavor', $this->get('flavor'));
         }
+        
         if($this->hasKey('name')){
             $this->request->getQuery()->set('name', $this->get('name'));
         }
-         if($this->hasKey('status')){
+        
+        if($this->hasKey('status')){
             $this->request->getQuery()->set('status', $this->get('status'));
         }
+        
+        if($this->hasKey('changes-since')){
+            $this->request->getQuery()->set('changes-since', $this->get('changes-since'));
+        }        
         parent::build();
     }
 }
