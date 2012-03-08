@@ -52,7 +52,7 @@ Guzzle\Tests\GuzzleTestCase::setServiceBuilder(\Guzzle\Service\ServiceBuilder::f
         'extends' => 'test.abstract.os',
         'class' => 'Guzzle.Openstack.Compute.ComputeClient',
         'params' => array(
-            'base_url' => 'http://192.168.4.100:8774/v1.1/',
+            'base_url' => 'http://192.168.4.100:8774/v2/',
             'tenant_id' => 'tenantid'
         )
     ),

@@ -23,7 +23,7 @@ class ListServersTest extends \Guzzle\Openstack\Tests\Compute\Common\ComputeTest
         $command->prepare();
       
         //Check method and resource
-        $this->assertEquals('http://192.168.4.100:8774/v1.1/tenantid/servers?image=imageRef&flavor=flavorRef&name=serverName&status=serverStatus&changes-since=dateTime&marker=markerID&limit=int', $command->getRequest()->getUrl());
+        $this->assertEquals('http://192.168.4.100:8774/v2/tenantid/servers?image=imageRef&flavor=flavorRef&name=serverName&status=serverStatus&changes-since=dateTime&marker=markerID&limit=int', $command->getRequest()->getUrl());
         $this->assertEquals('GET', $command->getRequest()->getMethod());
                 
         //Check for authentication header

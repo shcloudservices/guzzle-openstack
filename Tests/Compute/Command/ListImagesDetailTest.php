@@ -26,7 +26,7 @@ class ListImagesDetailTest extends ComputeTestCase
         $command->prepare();
       
         //Check method and resource
-        $this->assertEquals('http://192.168.4.100:8774/v1.1/tenantid/images/detail?server=serverRef&name=imageName&status=imageStatus&changes-since=dateTime&type=type&marker=markerID&limit=int', $command->getRequest()->getUrl());
+        $this->assertEquals('http://192.168.4.100:8774/v2/tenantid/images/detail?server=serverRef&name=imageName&status=imageStatus&changes-since=dateTime&type=type&marker=markerID&limit=int', $command->getRequest()->getUrl());
         $this->assertEquals('GET', $command->getRequest()->getMethod());
                 
         //Check for authentication header
