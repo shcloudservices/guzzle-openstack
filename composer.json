@@ -2,7 +2,7 @@
     "name": "shcloudservices/guzzle-openstack",
     "type": "library",
     "description": "PHP Clients for Openstack API",
-    "keywords": ["Guzzle, Openstack"],
+    "keywords": ["Guzzle", "Openstack"],
     "homepage": "http://github.com/shcloudservices/guzzle-openstack",
     "license": "MIT",
     "authors": [
