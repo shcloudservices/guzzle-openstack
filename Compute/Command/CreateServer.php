@@ -56,7 +56,7 @@ class CreateServer extends AbstractJsonCommand
     }
 
     /**
-     * Set the metadata
+     * Set the metadata - OPCIONAL
      *
      * @param string $metadata
      *
@@ -68,7 +68,7 @@ class CreateServer extends AbstractJsonCommand
     }
 
     /**
-     * Set the path
+     * Set the path - Cambiar a personality, algo como setPersonality o setPersonalityArray
      *
      * @param string $path
      *
