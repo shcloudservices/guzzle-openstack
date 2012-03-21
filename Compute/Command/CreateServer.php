@@ -68,27 +68,15 @@ class CreateServer extends AbstractJsonCommand
     }
 
     /**
-     * Set the path - Cambiar a personality, algo como setPersonality o setPersonalityArray
+     * Set the personality - OPCIONAL (Array)
      *
-     * @param string $path
+     * @param string $personality
      *
      * @return CreateServer
      */
-    public function setPath($path)
+    public function setPersonality($path)
     {
         return $this->set('path', $path);
-    }
-
-    /**
-     * Set the content
-     *
-     * @param string $content
-     *
-     * @return CreateServer
-     */
-    public function setContent($content)
-    {
-        return $this->set('content', $content);
     }
 
     protected function build()
@@ -97,14 +85,27 @@ class CreateServer extends AbstractJsonCommand
             "server" => array(
                 "name"=> $this->get('name'),
                 "imageRef" => $this->get('imageRef'),
-                "flavorRef" => $this->get('flavorRef'),
-                "metadata" => $this->get('metadata'),
+                "flavorRef" => $this->get('flavorRef')
+                )
+            );
+        
+        if($this->hasKey('metadata')){
+            $data['server']['metadata'] = $this->get('metadata');
+        }
+        
+        if($this->hasKey('personality')){
+            foreach ($this->get('personality') as $value){
+                array_push($data['server']['personality'], $value);
+            }
+            
+        }
+        //PA
+        /*
+        "metadata" => $this->get('metadata'),
                 "personality" => array(
                     "path" => $this->get('path'),
-                    "contents" => $this->get('contents')
-                )
-            )
-        );
+                    "contents" => $this->get('contents')*/
+        
         $body = json_encode($data);
         $this->request = $this->client->post('servers', null, $body);
     }
