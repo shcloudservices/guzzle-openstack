@@ -13,9 +13,8 @@ use Guzzle\Openstack\Common\Command\AbstractJsonCommand;
  * @guzzle name doc="Server Name" required="true"
  * @guzzle imageRef doc="Image Reference" required="true"
  * @guzzle flavorRef doc="Flavor Reference" required="true"
- * @guzzle metadata doc="Metadata" required="false"
- * @guzzle path doc="Path" required="false"
- * @guzzle contents doc="Contents" required="false"
+ * @guzzle metadata doc="Path" required="false"
+ * @guzzle personality doc="Contents" required="false"
  */
 class CreateServer extends AbstractJsonCommand
 {
@@ -99,13 +98,6 @@ class CreateServer extends AbstractJsonCommand
             }
             
         }
-        //PA
-        /*
-        "metadata" => $this->get('metadata'),
-                "personality" => array(
-                    "path" => $this->get('path'),
-                    "contents" => $this->get('contents')*/
-        
         $body = json_encode($data);
         $this->request = $this->client->post('servers', null, $body);
     }
