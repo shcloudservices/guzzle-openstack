@@ -16,6 +16,7 @@ class ComputeConstants
     const LIST_IMAGES_DETAIL = "ListImagesDetail";
     const LIST_FLAVORS = "ListFlavors";
     const LIST_FLAVORS_DETAIL = "ListFlavorsDetail";
+    const CREATE_SERVER = "CreateServer";
 }
 
 ?>
