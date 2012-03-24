@@ -1,0 +1,7 @@
+HTTP/1.1 202 Accepted
+X-Compute-Request-Id: req-842888f0-1d03-4049-a564-617ca4431d71
+Content-Type: application/json
+Content-Length: 398
+Date: Wed, 07 Mar 2012 02:16:16 GMT
+Connection: keep-alive
+{"server": {"OS-DCF:diskConfig": "MANUAL", "id": "1a389954-54d6-4924-b0fd-393ae90cf5a0", "links": [{"href": "http://192.168.3.50:8774/v2/4a9bc5a6fdea44ce8d02c7b7791cf54e/servers/1a389954-54d6-4924-b0fd-393ae90cf5a0", "rel": "self"}, {"href": "http://192.168.3.50:8774/4a9bc5a6fdea44ce8d02c7b7791cf54e/servers/1a389954-54d6-4924-b0fd-393ae90cf5a0", "rel": "bookmark"}], "adminPass": "4qgch4AZCfmV"}}
