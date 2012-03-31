@@ -1,8 +1,7 @@
-Guzzle Openstack API Clients for PHP
+Openstack API Clients for PHP
 ======================================
 
-Interact with Openstack Cloud using the Guzzle framework for
-building RESTful web service clients in PHP.
+Interact with Openstack Cloud from PHP language with these API web service clients based on the Guzzle Framework.
 
 This is a work in progress, in it's current state is still unusable. 
 
@@ -18,7 +17,7 @@ This is a work in progress, in it's current state is still unusable.
 
 ## Testing
 
-Copy phpunit.xml.dist to phpunit.xml.  Enter the full path to your Guzzle installation in the GUZZLE server parameter of the phpunit.xml file.
+Run phpunit on the project's root.
 
 ### More information
 
