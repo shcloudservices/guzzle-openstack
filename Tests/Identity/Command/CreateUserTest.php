@@ -25,7 +25,11 @@ class CreateUserTest extends \Guzzle\Openstack\Tests\Identity\Common\IdentityTes
                 
         //Check for authentication header
         $this->assertTrue($command->getRequest()->hasHeader('X-Auth-Token'));
-                        
+
+        //Check the body of the command
+        $body = $command->getRequest()->getBody()->read(200);
+        $this->assertEquals('{"user":{"name":"myusername","email":"myemail@email.com","password":"mypassword","tenant":"2","enabled":true}}', $body);
+        
         $this->client->execute($command);
       
         $result = $command->getResult();

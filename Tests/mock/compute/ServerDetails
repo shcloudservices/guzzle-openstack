@@ -1,0 +1,7 @@
+HTTP/1.1 200 OK
+X-Compute-Request-Id: req-b33f2b63-6eb5-4071-ab8a-eb9bba6b9693
+Content-Type: application/json
+Content-Length: 1250
+Date: Wed, 21 Mar 2012 06:02:56 GMT
+
+{"server": {"OS-EXT-STS:task_state": "networking", "addresses": {"private": [{"version": 4, "addr": "10.0.0.3"}]}, "links": [{"href": "http://192.168.3.50:8774/v2/4a9bc5a6fdea44ce8d02c7b7791cf54e/servers/a5cd4e1c-2928-45af-81fe-3594a8c093a6", "rel": "self"}, {"href": "http://192.168.3.50:8774/4a9bc5a6fdea44ce8d02c7b7791cf54e/servers/a5cd4e1c-2928-45af-81fe-3594a8c093a6", "rel": "bookmark"}], "image": {"id": "92f6b102-97aa-4854-bcae-8e98c255895d", "links": [{"href": "http://192.168.3.50:8774/4a9bc5a6fdea44ce8d02c7b7791cf54e/images/92f6b102-97aa-4854-bcae-8e98c255895d", "rel": "bookmark"}]}, "OS-EXT-STS:vm_state": "error", "flavor": {"id": "1", "links": [{"href": "http://192.168.3.50:8774/4a9bc5a6fdea44ce8d02c7b7791cf54e/flavors/1", "rel": "bookmark"}]}, "id": "a5cd4e1c-2928-45af-81fe-3594a8c093a6", "user_id": "0c98295dada04164913e4d6789cf21c9", "OS-DCF:diskConfig": "MANUAL", "accessIPv4": "", "accessIPv6": "", "progress": 0, "OS-EXT-STS:power_state": 0, "config_drive": "", "status": "BUILD", "updated": "2012-03-21T06:01:51Z", "hostId": "200782aed76c2fe1c5857127ebd0d55090bca2ee460d0b417c68fc8a", "key_name": "", "name": "test-server", "created": "2012-03-21T06:01:25Z", "tenant_id": "4a9bc5a6fdea44ce8d02c7b7791cf54e", "metadata": {}}}

@@ -58,9 +58,6 @@ class OpenstackClient extends \Guzzle\Service\Client {
         $this->identityClient = IdentityClient::factory(array(
                     'base_url' => $this->auth_url
                 ));
-        if (!is_null($username) && !is_null($password)) {
-            $this->authenticate($username, $password, $tenantName);
-        }
     }
 
     /**

@@ -13,9 +13,9 @@ use Guzzle\Openstack\Common\Command\AbstractJsonCommand;
  * @guzzle name doc="Server Name" required="true"
  * @guzzle imageRef doc="Image Reference" required="true"
  * @guzzle flavorRef doc="Flavor Reference" required="true"
- * @guzzle metadata doc="Metadata" required="false"
- * @guzzle path doc="Path" required="false"
- * @guzzle contents doc="Contents" required="false"
+ * @guzzle metadata doc="Metadata"
+ * @guzzle path doc="Path"
+ * @guzzle contents doc="Contents"
  */
 class CreateServer extends AbstractJsonCommand
 {
