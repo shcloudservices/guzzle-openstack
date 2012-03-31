@@ -1,7 +1,10 @@
 Openstack API Clients for PHP
 ======================================
 
-Interact with Openstack Cloud from PHP language with these API web service clients based on the Guzzle Framework.
+[![Build Status](https://secure.travis-ci.org/shcloudservices/guzzle-openstack.png?branch=master)](http://travis-ci.org/shcloudservices/guzzle-openstack)
+
+Interact with Openstack Cloud using the Guzzle framework for
+building RESTful web service clients in PHP.
 
 This is a work in progress, in it's current state is still unusable. 
 
