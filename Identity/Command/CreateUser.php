@@ -81,7 +81,7 @@ class CreateUser extends AbstractJsonCommand {
     {       
         $data = array(
             "user" => array(
-                "name"=> $this->get('username'),
+                "name"=> $this->get('name'),
                 "email" => $this->get('email'),
                 "password" => $this->get('password')
             )

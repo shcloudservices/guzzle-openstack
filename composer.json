@@ -1,9 +1,10 @@
 {
-    "name": "guzzle-openstack",
+    "name": "shcloudservices/guzzle-openstack",
     "type": "library",
-    "description": "Guzzle Openstack Clients",
-    "keywords": ["Guzzle, Openstack"],
-    "version": "0.1",
+    "description": "PHP Clients for Openstack API",
+    "keywords": ["Guzzle", "Openstack"],
+    "homepage": "http://github.com/shcloudservices/guzzle-openstack",
+    "license": "MIT",
     "authors": [
         {
             "name": "Adrian Moya",
