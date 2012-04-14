@@ -20,6 +20,7 @@
         "guzzle/guzzle": "2.2.0"
     },
     "autoload": {
-        "psr-0": { "Guzzle/Openstack": "/" }
-    }
+        "psr-0": { "Guzzle/Openstack": "" }
+    },
+    "target-dir": "Guzzle/Openstack"
 }
