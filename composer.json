@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": ">=5.3.2",
-        "guzzle/guzzle": "2.2.0"
+        "guzzle/guzzle": "2.2.3"
     },
     "autoload": {
         "psr-0": { "Guzzle/Openstack": "" }
