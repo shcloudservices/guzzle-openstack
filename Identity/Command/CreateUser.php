@@ -12,6 +12,7 @@ use Guzzle\Openstack\Common\Command\AbstractJsonCommand;
  * @guzzle email doc="Email of the new user" required="true"
  * @guzzle name doc="Name of the new user" required="true"
  * @guzzle password doc="Password of the new user" required="true"
+ * @guzzle tenantId doc="Tenant id of the new user" required="true"
  * @guzzle tenant doc="Tenant of the new user"
  * @guzzle enabled doc="Enabled state of new user"
  */
@@ -66,6 +67,18 @@ class CreateUser extends AbstractJsonCommand {
     }
     
     /**
+     * Set the tenant id
+     *
+     * @param int $tenantId
+     *
+     * @return CreateUser
+     */
+    public function setTenantId($tenantId)
+    {
+        return $this->set('tenantId', $tenantId);
+    }    
+    
+    /**
      * Set the user status
      *
      * @param boolean $enabled
@@ -83,7 +96,8 @@ class CreateUser extends AbstractJsonCommand {
             "user" => array(
                 "name"=> $this->get('name'),
                 "email" => $this->get('email'),
-                "password" => $this->get('password')
+                "password" => $this->get('password'),
+                "tenantId" => $this->get('tenantId')
             )
         );
         

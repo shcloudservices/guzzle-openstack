@@ -15,7 +15,8 @@ class CreateUserTest extends \Guzzle\Openstack\Tests\Identity\Common\IdentityTes
         $command->setName('myusername');
         $command->setPassword('mypassword');
         $command->setEmail('myemail@email.com');
-        $command->setTenant('2');
+        $command->setTenant('tenant');
+        $command->setTenantId('2');
         $command->setEnabled(true);
         $command->prepare();
       
@@ -28,7 +29,7 @@ class CreateUserTest extends \Guzzle\Openstack\Tests\Identity\Common\IdentityTes
 
         //Check the body of the command
         $body = $command->getRequest()->getBody()->read(200);
-        $this->assertEquals('{"user":{"name":"myusername","email":"myemail@email.com","password":"mypassword","tenant":"2","enabled":true}}', $body);
+        $this->assertEquals('{"user":{"name":"myusername","email":"myemail@email.com","password":"mypassword","tenantId":"2","tenant":"tenant","enabled":true}}', $body);
         
         $this->client->execute($command);
       
@@ -41,22 +42,28 @@ class CreateUserTest extends \Guzzle\Openstack\Tests\Identity\Common\IdentityTes
     
     public function testNameRequired()
     {
-        $command = $this->client->getCommand('CreateUser', array('password' => 'mypassword', 'email' => 'myemail@email.com'));
+        $command = $this->client->getCommand('CreateUser', array('password' => 'mypassword', 'email' => 'myemail@email.com', 'tenantId' => '2'));
         $this->setExpectedException('InvalidArgumentException');
         $command->prepare();
     }        
     
     public function testPasswordRequired()
     {
-        $command = $this->client->getCommand('CreateUser', array('name' => 'myusername', 'email' => 'myemail@email.com'));
+        $command = $this->client->getCommand('CreateUser', array('name' => 'myusername', 'email' => 'myemail@email.com',  'tenantId' => '2'));
         $this->setExpectedException('InvalidArgumentException');
         $command->prepare();        
     }
     
     public function testEmailRequired()
     {
-        $command = $this->client->getCommand('CreateUser', array('name' => 'myusername', 'password' => 'mypassword'));
+        $command = $this->client->getCommand('CreateUser', array('name' => 'myusername', 'password' => 'mypassword',  'tenantId' => '2'));
         $this->setExpectedException('InvalidArgumentException');
         $command->prepare();        
-    }    
+    } 
+    public function testTenantIdRequired()
+    {
+        $command = $this->client->getCommand('CreateUser', array('name' => 'myusername', 'password' => 'mypassword', 'email' => 'myemail@email.com'));
+        $this->setExpectedException('InvalidArgumentException');
+        $command->prepare();        
+    }
 }
