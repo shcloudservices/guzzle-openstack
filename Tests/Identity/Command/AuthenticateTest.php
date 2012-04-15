@@ -1,18 +1,17 @@
 <?php
 
-namespace Guzzle\Openstack\Tests\Openstack\Command;
+namespace Guzzle\Openstack\Tests\Identity\Command;
 
 /**
  * Authenticate command unit test
  */
-class AuthenticateTest extends \Guzzle\Tests\GuzzleTestCase
+class AuthenticateTest extends \Guzzle\Openstack\Tests\Identity\Common\IdentityTestCase
 {
 
     public function testAuthenticate()
     {
-        $client = $this->getServiceBuilder()->get('test.identity');
-        $this->setMockResponse($client, 'identity/AuthenticateAuthorized');        
-        $command = $client->getCommand('Authenticate');
+        $this->setMockResponse($this->client, 'identity/AuthenticateAuthorized');        
+        $command = $this->client->getCommand('Authenticate');
         $command->setUsername('username');
         $command->setPassword('password');
         $command->prepare();
@@ -21,9 +20,12 @@ class AuthenticateTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals('http://192.168.4.100:35357/v2.0/tokens', $command->getRequest()->getUrl());        
         $this->assertEquals('POST', $command->getRequest()->getMethod());        
 
-        //Test result
-             
-        $client->execute($command);       
+        //Check the body of the command
+        $body = $command->getRequest()->getBody()->read(200);
+        $this->assertEquals('{"auth":{"passwordCredentials":{"username":"username","password":"password"}}}', $body);
+        
+        //Test result     
+        $this->client->execute($command);       
         
         $result = $command->getResult();
 

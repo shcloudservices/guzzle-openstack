@@ -24,6 +24,11 @@ class CreateTenantsTest extends \Guzzle\Openstack\Tests\Identity\Common\Identity
                 
         //Check for authentication header
         $this->assertTrue($command->getRequest()->hasHeader('X-Auth-Token'));
+        
+        //Check the body of the command
+        $body = $command->getRequest()->getBody()->read(200);
+        $this->assertEquals('{"tenant":{"name":"Tenantname","description":"A description","enabled":true}}', $body);
+        
                         
         $this->client->execute($command);
       
