@@ -15,7 +15,6 @@ class CreateUserTest extends \Guzzle\Openstack\Tests\Identity\Common\IdentityTes
         $command->setName('myusername');
         $command->setPassword('mypassword');
         $command->setEmail('myemail@email.com');
-        $command->setTenant('tenant');
         $command->setTenantId('2');
         $command->setEnabled(true);
         $command->prepare();
@@ -29,7 +28,7 @@ class CreateUserTest extends \Guzzle\Openstack\Tests\Identity\Common\IdentityTes
 
         //Check the body of the command
         $body = $command->getRequest()->getBody()->read(200);
-        $this->assertEquals('{"user":{"name":"myusername","email":"myemail@email.com","password":"mypassword","tenantId":"2","tenant":"tenant","enabled":true}}', $body);
+        $this->assertEquals('{"user":{"name":"myusername","email":"myemail@email.com","password":"mypassword","tenantId":"2","enabled":true}}', $body);
         
         $this->client->execute($command);
       
