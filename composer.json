@@ -8,19 +8,18 @@
     "authors": [
         {
             "name": "Adrian Moya",
-            "email": "adrian.moya@solucioneshospedadas.com"
+            "email": "adrianmoya@gmail.com"
         },
         {
             "name": "Andreina Romero",
-            "email": "andreina.romero@solucioneshospedadas.com"
+            "email": "andreinar@gmail.com"
         }        
     ],
     "require": {
         "php": ">=5.3.2",
-        "guzzle/guzzle": "2.2.3"
+        "guzzle/guzzle": "*"
     },
     "autoload": {
-        "psr-0": { "Guzzle/Openstack": "" }
+        "psr-0": { "Guzzle/Openstack": "src/" }
     },
-    "target-dir": "Guzzle/Openstack"
 }

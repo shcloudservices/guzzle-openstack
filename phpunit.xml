@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="./Tests/bootstrap.php" colors="true">
+<phpunit bootstrap="./tests/bootstrap.php" colors="true">
     <testsuites>
-        <testsuite name="guzzle-openstack-service">
-            <directory suffix="Test.php">./Tests</directory>
+        <testsuite name="openstack">
+            <directory suffix="Test.php">./tests</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
             <directory>./</directory>
             <exclude>
-                <directory>./Tests</directory>
+                <directory>./tests</directory>
                 <directory>./docs</directory>
+                <directory>./coverage</directory>
+                <directory>./vendor</directory>
             </exclude>
         </whitelist>
     </filter>

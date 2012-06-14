@@ -3,3 +3,5 @@ nbproject/
 vendor/
 composer.lock
 composer.phar
+.project
+.settings/
