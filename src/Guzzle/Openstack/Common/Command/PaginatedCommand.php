@@ -41,11 +41,11 @@ class PaginatedCommand extends AbstractJsonCommand{
     
     protected function build()
     {
-        if($this->hasKey('marker')){
+        if($this->hasKey('marker') && !is_null($this->get('marker'))){
             $this->request->getQuery()->set('marker', $this->get('marker'));
         }
 
-        if($this->hasKey('limit')){
+        if($this->hasKey('limit') && !is_null($this->get('limit'))){
             $this->request->getQuery()->set('limit', $this->get('limit'));
         }
     }
