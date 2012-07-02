@@ -10,7 +10,7 @@ use Guzzle\Common\GuzzleException;
 /**
  * Openstack exception
  */
-class OpenstackException implements GuzzleException
+class OpenstackException extends \Exception implements GuzzleException
 {
 }
 
