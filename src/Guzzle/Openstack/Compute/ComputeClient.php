@@ -25,7 +25,7 @@ class ComputeClient extends AbstractClient
      *
      * @return ComputeClient
      */
-    public static function factory($config)
+    public static function factory($config = array())
     {
         $default = array();
         $required = array('base_url','token', 'tenant_id');
