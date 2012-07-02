@@ -21,10 +21,10 @@ class ComputeClient extends AbstractClient
 	 * @static
 	 *
 	 *
-	 * @param array $config Configuration data. Array keys:
-	 *                      base_url - Base URL of web service
-	 *                      token - Authentication token
-	 *                      tenant_id Tenant id
+	 * @param array|Collection $config Configuration data. Array keys:
+	 *                                 base_url - Base URL of web service
+	 *                                 token - Authentication token
+	 *                                 tenant_id Tenant id
 	 *
 	 * @return \Guzzle\Common\FromConfigInterface|ComputeClient|\Guzzle\Service\Client
 	 */
