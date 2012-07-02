@@ -17,7 +17,7 @@ abstract class AbstractJsonCommand extends AbstractCommand
     public function prepare()
     {
         parent::prepare();
-        $this->getRequest()->setHeader('Content-Type' ,'application/json');
+        return $this->getRequest()->setHeader('Content-Type' ,'application/json');
     }
     
     protected function process()
