@@ -42,27 +42,27 @@ class CreateUserTest extends \Guzzle\Openstack\Tests\Identity\Common\IdentityTes
     public function testNameRequired()
     {
         $command = $this->client->getCommand('CreateUser', array('password' => 'mypassword', 'email' => 'myemail@email.com', 'tenantId' => '2'));
-        $this->setExpectedException('InvalidArgumentException');
+        $this->setExpectedException('Guzzle\Service\Exception\ValidationException');
         $command->prepare();
     }        
     
     public function testPasswordRequired()
     {
         $command = $this->client->getCommand('CreateUser', array('name' => 'myusername', 'email' => 'myemail@email.com',  'tenantId' => '2'));
-        $this->setExpectedException('InvalidArgumentException');
+        $this->setExpectedException('Guzzle\Service\Exception\ValidationException');
         $command->prepare();        
     }
     
     public function testEmailRequired()
     {
         $command = $this->client->getCommand('CreateUser', array('name' => 'myusername', 'password' => 'mypassword',  'tenantId' => '2'));
-        $this->setExpectedException('InvalidArgumentException');
+        $this->setExpectedException('Guzzle\Service\Exception\ValidationException');
         $command->prepare();        
     } 
     public function testTenantIdRequired()
     {
         $command = $this->client->getCommand('CreateUser', array('name' => 'myusername', 'password' => 'mypassword', 'email' => 'myemail@email.com'));
-        $this->setExpectedException('InvalidArgumentException');
+        $this->setExpectedException('Guzzle\Service\Exception\ValidationException');
         $command->prepare();        
     }
 }
