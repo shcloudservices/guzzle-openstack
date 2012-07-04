@@ -69,6 +69,14 @@ Guzzle\Tests\GuzzleTestCase::setServiceBuilder(\Guzzle\Service\Builder\ServiceBu
             'tenant_id' => 'tenantid'
         )
     ),
+	'test.storage' => array(
+		'extends' => 'test.abstract.os',
+		'class' => 'Guzzle.Openstack.Storage.StorageClient',
+		'params' => array(
+			'base_url' => 'http://192.168.4.100:8080/v1/',
+			'tenant_id' => 'tenantid'
+		)
+	),
     'test.openstack'=> array(
         'extends' => 'test.abstract.os',
         'class' => 'Guzzle.Openstack.Openstack.OpenstackClient'
