@@ -1,17 +1,27 @@
 <?php
 /**
- * @license See the LICENSE file that was distributed with this source code.
+ * StorageClient.php
+ *
+ * PHP Version 5
+ *
+ * @category   Guzzle
+ * @package    Openstack\Storage
+ * @author     Patrick van Kouteren <p.vankouteren@cloudvps.com>
+ * @license    MIT See the LICENSE file that was distributed with this source code.
+ * @link       https://www.cloudvps.com
  */
 
-namespace Guzzle\Openstack\Compute;
+namespace Guzzle\Openstack\Storage;
 
 use Guzzle\Service\Inspector;
-use Guzzle\Http\Message\RequestInterface;
+
+//use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Openstack\Common\AbstractClient;
-use Guzzle\Service\Description\XmlDescriptionBuilder;
+
+//use Guzzle\Service\Description\XmlDescriptionBuilder;
 use Guzzle\Openstack\Common\AuthenticationObserver;
 
-class ComputeClient extends AbstractClient
+class StorageClient extends AbstractClient
 {
 	protected $baseUrl, $tenantId;
 
@@ -26,7 +36,7 @@ class ComputeClient extends AbstractClient
 	 *                                 token - Authentication token
 	 *                                 tenant_id Tenant id
 	 *
-	 * @return \Guzzle\Common\FromConfigInterface|ComputeClient|\Guzzle\Service\Client
+	 * @return \Guzzle\Common\FromConfigInterface|StorageClient|\Guzzle\Service\Client
 	 */
 	public static function factory($config = array())
 	{

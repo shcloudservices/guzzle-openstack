@@ -55,7 +55,7 @@ class CreateServer extends AbstractJsonCommand
     }
 
     /**
-     * Set the metadata - OPCIONAL
+     * Set the metadata - Optional
      *
      * @param string $metadata
      *
@@ -67,16 +67,15 @@ class CreateServer extends AbstractJsonCommand
     }
 
     /**
-     * Set the personality - OPCIONAL (Array)
+     * Set the personality - Optional
      *
-     * @param string $personality
+     * @param array $personality Personality array with keys 'path' and 'contents'.
      *
      * @return CreateServer
      */
-    public function setPersonality($path)
-    {
-        return $this->set('path', $path);
-    }
+	public function setPersonality($personality){
+		return $this->set('personality', $personality);
+	}
 
     protected function build()
     {
@@ -91,8 +90,9 @@ class CreateServer extends AbstractJsonCommand
         if($this->hasKey('metadata')){
             $data['server']['metadata'] = $this->get('metadata');
         }
-        
+
         if($this->hasKey('personality')){
+	        $data['server']['personality'] = array();
             foreach ($this->get('personality') as $value){
                 array_push($data['server']['personality'], $value);
             }
