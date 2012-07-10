@@ -40,7 +40,7 @@ class UpdateUsersTest extends \Guzzle\Openstack\Tests\Identity\Common\IdentityTe
     public function testIdRequired()
     {
         $command = $this->client->getCommand(IdentityConstants::UPDATE_USER, array());
-        $this->setExpectedException('InvalidArgumentException');
+        $this->setExpectedException('Guzzle\Service\Exception\ValidationException');
         $command->prepare();
     } 
 }

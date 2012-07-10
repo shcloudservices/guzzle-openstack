@@ -14,36 +14,40 @@ use Guzzle\Openstack\Common\AbstractClient;
 
 class IdentityClient extends AbstractClient
 {
-   
-    /**
-     * Factory method to create a new IdentityClient
-     *
-     * @param array|Collection $config Configuration data. Array keys:
-     *    base_url - Identity base url
-     *
-     * @return IdentityClient
-     */
-    public static function factory($config)
-    {
-        $default = array();
-        $required = array('base_url');
-        $config = Inspector::prepareConfig($config, $default, $required);        
-        $client = new self($config->get('base_url'), $config->get('token'));
-        $client->setConfig($config);
-        $client->getEventDispatcher()->addSubscriber(new AuthenticationObserver());
-        return $client;
-    }
 
-    /**
-     * IdentityClient constructor
-     *
-     * @param string $base_url Base Url for keystone
-     */
-    public function __construct($base_url, $token)
-    {
-        parent::__construct($base_url);
-        if(!is_null($token))
-            $this->setToken($token);
-    }
-    
+	/**
+	 *Factory method to create a new IdentityClient
+	 *
+	 * @static
+	 *
+	 * @param array|Collection $config Configuration data. Array keys:
+	 *                                 base_url - Identity base url
+	 *
+	 * @return \Guzzle\Common\FromConfigInterface|IdentityClient|\Guzzle\Service\Client
+	 */
+	public static function factory($config = array())
+	{
+		$default = array();
+		$required = array('base_url');
+		$config = Inspector::prepareConfig($config, $default, $required);
+		$client = new self($config->get('base_url'), $config->get('token'));
+		$client->setConfig($config);
+		$client->getEventDispatcher()->addSubscriber(new AuthenticationObserver());
+		return $client;
+	}
+
+	/**
+	 * Constructor function. If token is not yet present, set to null.
+	 *
+	 * @param string $base_url Base Url for keystone
+	 * @param array|\Guzzle\Common\Collection|null $token
+	 */
+	public function __construct($base_url, $token)
+	{
+		parent::__construct($base_url);
+		if (!is_null($token)) {
+			$this->setToken($token);
+		}
+	}
+
 }

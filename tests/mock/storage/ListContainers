@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+X-Account-Object-Count: 0
+X-Account-Bytes-Used: 0
+X-Account-Container-Count: 5
+Accept-Ranges: bytes
+Content-Length: 31
+Content-Type: application/json
+X-Trans-Id: txb28795cc25b04f0dbce408dfa5a3cfc9
+Date: Mon, 07 Nov 2011 19:03:06 GMT
+
+{"containers": [{"name": "cosmo"}, {"name": "dogs"}, {"name": "elaine"}, {"name": "george"}, {"name": "jerry"}]}

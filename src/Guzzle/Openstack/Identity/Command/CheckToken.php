@@ -43,7 +43,7 @@ class CheckToken extends AbstractJsonCommand
     {
         $this->request = $this->client->head('tokens/'.$this->get('token'));        
         
-        if($this->hasKey('belongsTo')){
+        if($this->hasKey('belongsTo') && !is_null($this->get('belongsTo'))){
             $this->request->getQuery()->set('belongsTo', $this->get('belongsTo'));
         }        
         

@@ -42,7 +42,7 @@ class CreateTenantsTest extends \Guzzle\Openstack\Tests\Identity\Common\Identity
     public function testNameRequired()
     {
         $command = $this->client->getCommand('CreateTenant',  array());
-        $this->setExpectedException('InvalidArgumentException');
+        $this->setExpectedException('Guzzle\Service\Exception\ValidationException');
         $command->prepare();
     } 
 }

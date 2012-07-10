@@ -36,7 +36,7 @@ class UpdateTenantsTest extends \Guzzle\Openstack\Tests\Identity\Common\Identity
     public function testIdRequired()
     {
         $command = $this->client->getCommand('UpdateTenant', array());
-        $this->setExpectedException('InvalidArgumentException');
+        $this->setExpectedException('Guzzle\Service\Exception\ValidationException');
         $command->prepare();
     }
 }
