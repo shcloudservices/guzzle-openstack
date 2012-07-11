@@ -5,6 +5,5 @@ php:
 before_script:
   - wget --quiet http://getcomposer.org/composer.phar
   - php composer.phar install # --install-suggests doesn't work. See composer issue #510
-  - cp phpunit.xml.dist phpunit.xml
   - ~/.nvm/nvm.sh run default vendor/guzzle/guzzle/tests/Guzzle/Tests/Http/server.js &
 script: phpunit
