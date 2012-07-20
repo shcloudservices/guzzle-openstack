@@ -14,7 +14,7 @@ This is a work in progress, in it's current state is still unusable.
 
 *ComputeClient* - Client for Compute Service (Nova)
 
-*StorageClient* - Client for Storage Service (Swift) <- Development hasn't started yet.
+*StorageClient* - Client for Storage Service (Swift) <- Development has started
 
 *OpenstackClient* - One client to rule them all! 
 

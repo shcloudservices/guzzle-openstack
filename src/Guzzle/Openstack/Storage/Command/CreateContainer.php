@@ -83,7 +83,7 @@ class CreateContainer extends AbstractJsonCommand
 	 *
 	 * @param int $tenantId
 	 *
-	 * @return CreateUser
+	 * @return CreateContainer
 	 */
 	public function setTenantId($tenantId)
 	{
