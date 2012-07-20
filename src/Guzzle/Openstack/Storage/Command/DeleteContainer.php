@@ -37,7 +37,7 @@ class DeleteContainer extends AbstractJsonCommand
 	 *
 	 * @param string $name
 	 *
-	 * @return CreateContainer
+	 * @return DeleteContainer
 	 *
 	 * @throws \Guzzle\Common\Exception\UnexpectedValueException
 	 */
@@ -59,7 +59,7 @@ class DeleteContainer extends AbstractJsonCommand
 	 *
 	 * @param int $tenantId
 	 *
-	 * @return CreateUser
+	 * @return DeleteContainer
 	 */
 	public function setTenantId($tenantId)
 	{
